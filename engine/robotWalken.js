@@ -62,6 +62,13 @@
 })(window);
 
 
-const WALL      = 100;
 const EMPTY     = 0;
-const FOOD      = 1;
+const ENERGY    = 51;
+const BUTTON 	= 52;
+const BOMB 		= 53;
+const HOLE 		= 54;
+const LASER 	= 55;
+
+const WALL      = 100;
+const ROBOT 	= 101;
+const DOOR 		= 102;

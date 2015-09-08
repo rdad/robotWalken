@@ -4,7 +4,9 @@
 		loaded: false,
 		map: [],
 		width: 0,
-		height: 0
+		height: 0,
+		robots: null,
+		nb_robot: 0
 	};
 
 	var p = {};
@@ -32,20 +34,23 @@
 
 	        // --- challenge init
 	        
-	        robotWalken.challenge.init({
+	        robotWalken.challenge.init_map({
 	        	add: add
 	        });
-
-	        // --- robots are added
-	        
-
-
 
 			log('[arena] is ready');
 		},
 
-		build: function(){
+		build: function(robot_data){
+
 			log('[arena] build : on the way ...');
+
+			// place robots on map
+			
+			data.robot 		= robot_data.list;
+			data.nb_robot 	= robot_data.nb_robot;
+			
+			robotWalken.challenge.init_robot(data.robot);
 		},
 
 		get_width: function(){

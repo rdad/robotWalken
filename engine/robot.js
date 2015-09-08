@@ -4,10 +4,11 @@ const BAS       = 2;
 const GAUCHE    = 10;
 const DROITE    = 12;
 
-var Robot = function (name, id)
+var Robot = function (name, id, author)
 {
     this.name       = name;
     this.id         = id;
+    this.author     = author || 'anonyme';
     this.life       = 10;
     this.strength   = 10;
     this.gfx        = null;
