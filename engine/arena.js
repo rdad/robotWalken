@@ -11,12 +11,14 @@
 
 	var p = {};
 
+	var rw;
+
 	var arena = {
 
-		init: function(config){
+		init: function(){
 
-			data.width  = config.width || 5;
-			data.height = config.height || 5;
+			data.width  = rw.challenge.config.map.width || 5;
+			data.height = rw.challenge.config.map.height || 5;
 
 			// --- map reset
         
@@ -34,9 +36,7 @@
 
 	        // --- challenge init
 	        
-	        robotWalken.challenge.init_map({
-	        	add: add
-	        });
+	        data.map = rw.challenge.init_map();
 
 			log('[arena] is ready');
 		},
@@ -50,29 +50,27 @@
 			data.robot 		= robot_data.list;
 			data.nb_robot 	= robot_data.nb_robot;
 			
-			robotWalken.challenge.init_robot(data.robot);
+			rw.challenge.init_robot(data.robot);
 
-			robotWalken.radio('arenaReady').broadcast();
+			rw.radio('arenaReady').broadcast();
 		},
 
-		get_width: function(){
-			return data.width;
+		add: function(type, x, y){
+			data.map[x][y] = type;
 		},
 
-		get_height: function(){
-			return data.height;
-		}
+		set_handler: function(m){
+			rw = m;
+		},
 	};
 
 	var self 			= arena;
-	ctx.arena 			= arena;
+	ctx.add_module('arena', arena);
 
 
 	// --- PRIVATE
 	
-	function add(type, x, y){
-		data.map[x][y] = type;
-	}
+	
 		
 
 })(robotWalken);

@@ -1,29 +1,24 @@
 (function(ctx){
 
-	var config = {
-		id: 1,
-		title: 'Escape!',
-		resume: 'Vous devez faire sortir votre robot par la sortie'
-	};
-	var arena_handler;
+	var rw;
 	
 	var challenge = {
 
-		get_config: function(){
-			return config;
+		config: {
+			id: 1,
+			title: 'Escape!',
+			resume: 'Vous devez faire sortir votre robot par la sortie'
 		},
 
-		init_map: function(arena_add){
+		init_map: function(){
 
-			arena_handler = arena_add;
-
-			var w = robotWalken.arena.get_width(),
-				h = robotWalken.arena.get_height(),
+			var w = rw.challenge.config.map.width,
+				h = rw.challenge.config.map.height,
 				nb = 10, j;
 
 			for(j=0; j<nb; j++)
 	        {            
-	            arena_handler.add(WALL,parseInt(Math.random()*w),parseInt(Math.random()*h));          
+	            rw.arena.add(WALL,parseInt(Math.random()*w),parseInt(Math.random()*h));          
 	        }
 			log('[challenge] init : Map is updated');
 		},
@@ -37,7 +32,7 @@
 				p = robots[id].position;
 				p.x = start[nb][0];
 				p.y = start[nb][1];
-				arena_handler.add(id, p.x, p.y);
+				rw.arena.add(id, p.x, p.y);
   				nb++;
 			}
 
@@ -50,10 +45,14 @@
 
 		win: function(){
 
-		}
+		},
+
+		set_handler: function(m){
+			rw = m;
+		},
 	};
 
 	var self 			= challenge;
-	ctx.challenge 		= challenge;
+	ctx.add_module('challenge', challenge);
 
 })(robotWalken);

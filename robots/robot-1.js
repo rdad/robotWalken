@@ -26,6 +26,6 @@
 	    }
 	}
 
-	robotWalken.robot_manager.add(robby);
+	robotWalken.add_participation(robby);
 
 })();

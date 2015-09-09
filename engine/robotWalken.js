@@ -4,7 +4,7 @@
 	var data = {
 		version : 0.1,
 		debug: true,
-		config: {
+		default: {
 			map: {
 				width: 20,
 				height: 20,
@@ -12,43 +12,82 @@
 		}
 	};
 
-	var handler = {
+	var rw = {
+		config: data
 	};
+
 
 	var app = {
 
-		start: function(config){
+		init: function(config){
 
 			log("_-_-==> Welcome to Robot Walken version "+data.version+" bip!yuuuuu!deep! <==-_-_");
 
-			// challenge configuration
+			// config values
+			 
+			for (var attrname in config) {
+				if(typeof data[attrname] == 'undefined'){
+					data[attrname] = config[attrname];
+				}
+			}
+
+			// security
 			
-			if(typeof self.challenge == 'undefined'){
-				log('[robotWalken] Challenge not found :( No start & exit', 'error');
+			delete self.add_module;
+
+			if(!data.debug){
+				delete self.get_module;
+			}
+			return this;
+		},
+
+		start: function(){
+
+			// --- Challenge configuration
+			
+			if(typeof rw.challenge == 'undefined'){
+				log('[robotWalken] Challenge not found :( No start possible', 'error');
 				return;
 			}
-			var cfg = self.challenge.get_config();
-			if(cfg){
-				for (var attrname in cfg) { data.config[attrname] = cfg[attrname]; }
-				log('[robotWalken] start : Challenge configuration ready');
-			}else{
-				log('[robotWalken] start : Default configuration ready');
+
+			// default values
+			 
+			for (var attrname in data.default) {
+				if(typeof rw.challenge.config[attrname] == 'undefined'){
+					rw.challenge.config[attrname] = data.default[attrname];
+				}
 			}
+
+			log('[robotWalken] start : Challenge configuration done');
+
 
 			// homescreen
 			
-			self.homescreen.init();
+			rw.homescreen.init();
 
 			// arena
 			
-			self.arena.init(data.config.map);
+			rw.arena.init();
 
 			// robots
 			
-			self.radio('robotsReady').subscribe(self.arena.build);
-			self.radio('arenaReady').subscribe(self.homescreen.display);
+			self.radio('robotsReady').subscribe(function(){
+				rw.homescreen.display();
+			});
+			//self.radio('arenaReady').subscribe(rw.homescreen.display);
 
-			self.robot_manager.init(config.robot_folder || 'robots/');
+			rw.robot_manager.init(data.robot_folder || 'robots/');
+		},
+
+		run: function(){
+
+			log("[robotWalken] running & kickin'");
+		},
+
+		add_participation: function(robot){
+
+			rw.robot_manager.add(robot);
+			return this;
 		},
 
 		splash_screen: function(){
@@ -69,6 +108,22 @@
 
 		get_version: function(){
 			return data.version;
+		},
+
+
+		// --- MODULES
+		
+		add_module: function(name, mod){
+
+			rw[name] = mod;
+			mod.set_handler(rw);
+			delete mod.set_handler;
+
+			if(data.debug)	log('[robotWalken] module added : '+name);
+		},
+
+		get_modules: function(){
+			return rw;
 		}
 	};
 

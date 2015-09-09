@@ -13,6 +13,7 @@ body {
 	background-position: right center;
 	background-repeat: no-repeat;
 	background-color: #d4d1be;
+	display: none;
 }
 
 #home, #config{

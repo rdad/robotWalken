@@ -3,25 +3,15 @@
 	var el, home, config;
 	var displayed = 'home';
 
+	var rw;
+
 	var homescreen = {
 
 		init: function(){
 
 			build_dom();
+			prepare_events();
 
-			document.getElementById('bt_config').addEventListener("click", function(){
-			    self.display('config');
-			});
-
-			document.getElementById('bt_run').addEventListener("click", function(){
-			    robotWalken.arena_screen();
-			});
-
-			document.getElementById('bt_config_save').addEventListener("click", function(){
-			    // @todo : save
-			    self.display('home');
-			});
-			
 			log('[homescreen] is ready');
 		},
 
@@ -37,19 +27,40 @@
 				el.style.display = 'block';
 				log('[homescreen] displayed full');
 			}
-		}
+		},
+
+		set_handler: function(m){
+			rw = m;
+		},
 	};
 
 	var self 		= homescreen;
-	ctx.homescreen	= homescreen;
+	ctx.add_module('homescreen', homescreen);
 
 
 	// --- PRIVATE
 	
+	function prepare_events(){
+
+		document.getElementById('bt_config').addEventListener("click", function(){
+		    self.display('config');
+		});
+
+		document.getElementById('bt_run').addEventListener("click", function(){
+		    robotWalken.run();
+		});
+
+		document.getElementById('bt_config_save').addEventListener("click", function(){
+		    // @todo : save
+		    self.display('home');
+		});
+	}
+
+
 	function build_dom(){
 
 
-		var challenge = robotWalken.challenge.get_config();
+		var challenge = rw.challenge.config;
 
 		el = get_element('div', 'homescreen', {
 			style : 'width:'+window.innerWidth+'px; height:'+window.innerHeight+'px'

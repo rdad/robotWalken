@@ -11,6 +11,8 @@
 
 	var p = {};
 
+	var rw;
+
 	var robot_manager = {
 
 		init: function(folder){
@@ -27,6 +29,10 @@
 			}
 
 			p.timeout = setTimeout(end_robot_loading, data.max_loading_ms);	
+		},
+
+		set_handler: function(m){
+			rw = m;
 		},
 
 		add: function(robot){
@@ -69,8 +75,8 @@
 		}
 	};
 
-	var self 			= robot_manager;
-	ctx.robot_manager 	= robot_manager;
+	var self = robot_manager;
+	ctx.add_module('robot_manager', robot_manager);
 
 
 	// --- PRIVATE
