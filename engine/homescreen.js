@@ -1,7 +1,9 @@
 (function(ctx){
 
 	var el, home, config;
-	var displayed = 'home';
+	var data = {
+		displayed: 'home'
+	};
 
 	var rw;
 
@@ -13,16 +15,18 @@
 			prepare_events();
 
 			log('[homescreen] is ready');
+
+			return this;
 		},
 
 		display: function(part){
 
 			if(typeof part != 'undefined'){
 
-				document.getElementById(displayed).style.display 	= 'none';
+				document.getElementById(data.displayed).style.display 	= 'none';
 				document.getElementById(part).style.display 		= 'block';
-				displayed = part;
-				log('[homescreen] '+displayed+' displayed ');
+				data.displayed = part;
+				log('[homescreen] '+data.displayed+' displayed ');
 			}else{
 				el.style.display = 'block';
 				log('[homescreen] displayed full');
@@ -38,8 +42,8 @@
 	ctx.add_module('homescreen', homescreen);
 
 
-	// --- PRIVATE
-	
+	// --- PRIVATE	
+
 	function prepare_events(){
 
 		document.getElementById('bt_config').addEventListener("click", function(){
@@ -47,13 +51,32 @@
 		});
 
 		document.getElementById('bt_run').addEventListener("click", function(){
+
+			rw.challenge.init_robot();
 		    robotWalken.run();
 		});
 
 		document.getElementById('bt_config_save').addEventListener("click", function(){
-		    // @todo : save
+
+
+		    // save participants
+		    
+		    var cbox = document.getElementsByTagName('input');
+		    var new_list = [];
+
+		    for (i = 0; i < cbox.length; i++) {
+		    	if(cbox[i].checked)	new_list.push(parseInt(cbox[i].value));
+			}
+
+			rw.robot_manager.set_participant_list(new_list);
 		    self.display('home');
 		});
+
+		
+
+		var i;
+		
+		
 	}
 
 
@@ -75,7 +98,7 @@
 		el.appendChild(home);
 
 		// infos
-		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get_version();
+		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get('version');
 		infos += " by <a href='https://github.com/rdad' target='_blank'>@rdad</a>";
 		infos += "<p><strong>CHALLENGE "+challenge.id+"</strong> : "+challenge.resume+"</p>";
 
@@ -104,8 +127,17 @@
 		el.appendChild(config);
 
 		// infos
-		var rob  = "<input type='checkbox'> robby<br>";
-		rob 	+= "<input type='checkbox'> bob<br>";
+		
+		var participants 	= rw.robot_manager.get('participant'),
+			list 			= rw.robot_manager.get('list'),
+			rob 			= '', r, i, c;
+
+		if(list){
+			for(i in list){
+				c 		 = (participants.indexOf(parseInt(i)) >= 0) ? ' checked' : '';
+				rob 	+= "<input type='checkbox'"+c+" value='"+i+"'> "+list[i].name+"<br>";
+			}			
+		}
 
 		var r = get_element( 'p',null, {innerHTML: rob} );
 		config.appendChild(r);

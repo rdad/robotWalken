@@ -1,5 +1,6 @@
 (function(ctx){
 
+	"use strict";
 
 	var data = {
 		version : 0.1,
@@ -61,18 +62,15 @@
 			log('[robotWalken] start : Challenge configuration done');
 
 
-			// homescreen
-			
-			rw.homescreen.init();
-
-			// arena
+			// --- Arena
 			
 			rw.arena.init();
 
 			// robots
 			
 			self.radio('robotsReady').subscribe(function(){
-				rw.homescreen.display();
+
+				rw.homescreen.init().display();
 			});
 			//self.radio('arenaReady').subscribe(rw.homescreen.display);
 
@@ -81,7 +79,17 @@
 
 		run: function(){
 
+			document.getElementById('homescreen').style.display = 'none';
+			document.getElementById('arena').style.display 		= 'block';
+
 			log("[robotWalken] running & kickin'");
+		},
+
+		pause: function(){
+
+			document.getElementById('homescreen').style.display = 'block';
+			document.getElementById('arena').style.display 		= 'none';
+			log("[robotWalken] !STOP!");
 		},
 
 		add_participation: function(robot){
@@ -90,24 +98,8 @@
 			return this;
 		},
 
-		splash_screen: function(){
-
-			document.getElementById('homescreen').style.display = 'block';
-			document.getElementById('arena').style.display 		= 'none';
-
-			log('[robotWalken] splash_screen : display');
-		},
-
-		arena_screen: function(){
-
-			document.getElementById('homescreen').style.display = 'none';
-			document.getElementById('arena').style.display 		= 'block';
-
-			log('[robotWalken] arena_screen : display');
-		},
-
-		get_version: function(){
-			return data.version;
+		get: function(name){
+			return data[name];
 		},
 
 

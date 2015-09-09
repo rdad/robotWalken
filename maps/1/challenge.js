@@ -23,10 +23,11 @@
 			log('[challenge] init : Map is updated');
 		},
 
-		init_robot: function(robots){
+		init_robot: function(){
 
-			var id, p, nb=0;
-			var start = [[0,0],[0,1],[1,1],[1,0]];
+			var id, p, nb=0,
+				start = [[0,0],[0,1],[1,1],[1,0]],
+				robots = rw.robot_manager.get('list');
 
 			for (id in robots) {
 				p = robots[id].position;

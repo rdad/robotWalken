@@ -3,6 +3,7 @@
 	var data = {
 		loaded: false,
 		list: {},
+		participant: [],
 		nb_robot: 0,
 		nb_loaded: 0,
 		nb_max_robot: 4,
@@ -21,6 +22,8 @@
 
 			log('[robot_manager] robots loading ...');
 
+			load_local_data();
+
 			for(var j=1; j<=data.nb_max_robot; j++){
 				var s = document.createElement( 'script' );
 				s.setAttribute('src',folder+'robot-'+j+'.js');
@@ -31,8 +34,21 @@
 			p.timeout = setTimeout(end_robot_loading, data.max_loading_ms);	
 		},
 
+		set_participant_list: function(list){
+
+			data.participant = list;
+			localStorage.setItem('rw_participants', JSON.stringify(list));
+
+			log('[robot_manager] set_participant_list : New list is saved localy');
+			log(list);
+		},
+
 		set_handler: function(m){
 			rw = m;
+		},
+
+		get: function(name){
+			return data[name];
 		},
 
 		add: function(robot){
@@ -95,6 +111,17 @@
 			clearTimeout(p.timeout);
 			end_robot_loading();
 		}
-	}	
+	}
+
+	function load_local_data(){
+
+		var d = localStorage.getItem('rw_participants');
+
+		if(d){
+			data.participant = JSON.parse(d);
+			log('[robot_manager] Local participant list found ...');
+		}
+	}
+	
 
 })(robotWalken);

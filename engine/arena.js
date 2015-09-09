@@ -4,9 +4,7 @@
 		loaded: false,
 		map: [],
 		width: 0,
-		height: 0,
-		robots: null,
-		nb_robot: 0
+		height: 0
 	};
 
 	var p = {};
@@ -36,23 +34,9 @@
 
 	        // --- challenge init
 	        
-	        data.map = rw.challenge.init_map();
+	        rw.challenge.init_map();
 
 			log('[arena] is ready');
-		},
-
-		build: function(robot_data){
-
-			log('[arena] build : on the way ...');
-
-			// place robots on map
-			
-			data.robot 		= robot_data.list;
-			data.nb_robot 	= robot_data.nb_robot;
-			
-			rw.challenge.init_robot(data.robot);
-
-			rw.radio('arenaReady').broadcast();
 		},
 
 		add: function(type, x, y){
