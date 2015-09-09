@@ -7,13 +7,17 @@
 		config: {
 			id: 1,
 			title: 'Escape!',
-			resume: 'Vous devez faire sortir votre robot par la sortie'
+			resume: 'Vous devez faire sortir votre robot par la sortie',
+			map: {
+				width: 20,
+				height: 20
+			}
 		},
 
 		init_map: function(){
 
-			var w = rw.challenge.config.map.width,
-				h = rw.challenge.config.map.height,
+			var w = self.config.map.width,
+				h = self.config.map.height,
 				nb = 10, j;
 
 			for(j=0; j<nb; j++)
@@ -26,7 +30,9 @@
 		init_robot: function(){
 
 			var id, p, nb=0,
-				start = [[0,0],[0,1],[1,1],[1,0]],
+				w = self.config.map.width-1,
+				h = self.config.map.height-1,
+				start = [[0,0],[w,h],[w,0],[0,h]],
 				robots = rw.robot_manager.get('list');
 
 			for (id in robots) {

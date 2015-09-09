@@ -5,6 +5,8 @@
 	var data = {
 		version : 0.1,
 		debug: true,
+		display_driver: 'webgl',
+		time_step: 500,
 		default: {
 			map: {
 				width: 20,
@@ -64,7 +66,7 @@
 
 			// --- Arena
 			
-			rw.arena.init();
+			rw.arena.init(data.display_driver);
 
 			// robots
 			
@@ -83,7 +85,20 @@
 			document.getElementById('arena').style.display 		= 'block';
 
 			log("[robotWalken] running & kickin'");
+
+			self.running();
 		},
+
+		running: function(){
+
+	        //requestAnimationFrame( arena.run );
+
+	        rw.robot_manager.update();
+	        rw.arena.graphic.render();
+	        rw.arena.graphic.stats.update();
+	        
+	        setTimeout("robotWalken.running()",data.time_step);
+	    },
 
 		pause: function(){
 
@@ -124,7 +139,8 @@
 
 
 	// --- PRIVATE
-	
+
+
 	ctx.log = function(txt, type){
 
 		if(data.debug){
@@ -138,6 +154,7 @@
 
 
 const EMPTY     = 0;
+const FOOD 		= 50;
 const ENERGY    = 51;
 const BUTTON 	= 52;
 const BOMB 		= 53;

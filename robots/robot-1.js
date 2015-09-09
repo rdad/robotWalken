@@ -1,7 +1,7 @@
 (function(){
 
 
-	robby = new Robot('robby', 1);
+	var robby = new Robot('robby', 1);
 
 	robby.init = function(){
 	    this.dir = [BAS,DROITE,HAUT,GAUCHE];

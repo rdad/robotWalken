@@ -16,6 +16,10 @@ body {
 	display: none;
 }
 
+#arena{
+	display: none;
+}
+
 #home, #config{
 	width: 70%;
 	margin-left: 5%;

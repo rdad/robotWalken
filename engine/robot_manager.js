@@ -34,6 +34,10 @@
 			p.timeout = setTimeout(end_robot_loading, data.max_loading_ms);	
 		},
 
+		update: function(){
+
+		},
+
 		set_participant_list: function(list){
 
 			data.participant = list;
@@ -49,6 +53,10 @@
 
 		get: function(name){
 			return data[name];
+		},
+
+		get_robot: function(id){
+			return data.list[id];
 		},
 
 		add: function(robot){

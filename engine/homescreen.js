@@ -53,6 +53,7 @@
 		document.getElementById('bt_run').addEventListener("click", function(){
 
 			rw.challenge.init_robot();
+			rw.arena.build();
 		    robotWalken.run();
 		});
 

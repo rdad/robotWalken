@@ -1,15 +1,15 @@
 (function(){
 
-    robby = new Robot('boulon',2);
+    var boulon = new Robot('boulon',2);
 
-    robby.init = function(){
-
-    }
-
-    robby.update = function(){
+    boulon.init = function(){
 
     }
 
-    robotWalken.add_participation(robby);
+    boulon.update = function(){
+
+    }
+
+    robotWalken.add_participation(boulon);
     
 })();
