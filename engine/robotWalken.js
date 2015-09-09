@@ -12,6 +12,9 @@
 		}
 	};
 
+	var handler = {
+	};
+
 	var app = {
 
 		start: function(config){
@@ -26,12 +29,15 @@
 			}
 			var cfg = self.challenge.get_config();
 			if(cfg){
-				data.config = cfg;
+				for (var attrname in cfg) { data.config[attrname] = cfg[attrname]; }
 				log('[robotWalken] start : Challenge configuration ready');
 			}else{
 				log('[robotWalken] start : Default configuration ready');
 			}
 
+			// homescreen
+			
+			self.homescreen.init();
 
 			// arena
 			
@@ -40,7 +46,29 @@
 			// robots
 			
 			self.radio('robotsReady').subscribe(self.arena.build);
+			self.radio('arenaReady').subscribe(self.homescreen.display);
+
 			self.robot_manager.init(config.robot_folder || 'robots/');
+		},
+
+		splash_screen: function(){
+
+			document.getElementById('homescreen').style.display = 'block';
+			document.getElementById('arena').style.display 		= 'none';
+
+			log('[robotWalken] splash_screen : display');
+		},
+
+		arena_screen: function(){
+
+			document.getElementById('homescreen').style.display = 'none';
+			document.getElementById('arena').style.display 		= 'block';
+
+			log('[robotWalken] arena_screen : display');
+		},
+
+		get_version: function(){
+			return data.version;
 		}
 	};
 

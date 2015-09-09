@@ -51,6 +51,8 @@
 			data.nb_robot 	= robot_data.nb_robot;
 			
 			robotWalken.challenge.init_robot(data.robot);
+
+			robotWalken.radio('arenaReady').broadcast();
 		},
 
 		get_width: function(){

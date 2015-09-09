@@ -3,6 +3,44 @@ body {
         background-color: #f0f0f0;
         margin: 0px;
         overflow: hidden;
+        font-size: 14px;
 }
 
 #oldie { background-color: #ddd !important }
+
+#homescreen{
+	background-image: url('walken5.png');
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-color: #d4d1be;
+}
+
+#home, #config{
+	width: 70%;
+	margin-left: 5%;
+	padding-top: 10%;
+}
+
+#config{
+	display: none;
+}
+
+h2{
+	margin: 0;
+	font-size: 500%;
+	color: #333;
+}
+
+button{
+	padding: 10px 30px;
+	background-color: #fff;
+	border: 0;
+	margin-top: 40px;
+}
+
+#bt_config{
+}
+
+#bt_run{
+	margin-left: 10px;r
+}

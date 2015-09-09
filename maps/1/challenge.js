@@ -1,6 +1,10 @@
 (function(ctx){
 
-	var config;
+	var config = {
+		id: 1,
+		title: 'Escape!',
+		resume: 'Vous devez faire sortir votre robot par la sortie'
+	};
 	var arena_handler;
 	
 	var challenge = {
