@@ -19,6 +19,7 @@
 	        document.body.appendChild( this.container );
 
 	        this.renderer = new THREE.WebGLRenderer( {antialias: true} );
+	        this.renderer.setClearColor( 0xd4d1be );
 	        this.renderer.setSize( window.innerWidth, window.innerHeight );
 
 	        this.container.appendChild( this.renderer.domElement );
@@ -40,12 +41,18 @@
 
 	        // Lights
 
-	        var ambientLight = new THREE.AmbientLight( 0x444444 );
+	        /*var ambientLight = new THREE.AmbientLight( 0x444444 );
 	        this.scene.add( ambientLight );
 
 	        var dirLight = new THREE.DirectionalLight( 0xFFFFFF );
 	        dirLight.position.set( -1, 1, 0 ).normalize();
-	        this.scene.add( dirLight );
+	        this.scene.add( dirLight );*/
+
+	        this.scene.add( new THREE.AmbientLight( 0x222222 ) );
+
+			var light = new THREE.PointLight( 0xffffff );
+			light.position.copy( this.camera.position );
+			this.scene.add( light );
 
 	        // stats
 	        
@@ -65,13 +72,13 @@
 	        
 	        // geometry        
 	        this.geometry.robot   = new THREE.CylinderGeometry( 15, 25, 50, 10, 10);
-	        this.geometry.wall    = new THREE.CubeGeometry( 50, 50, 50 );
+	        this.geometry.wall    = new THREE.BoxGeometry( 50, 50, 50 );
 	        this.geometry.food    = new THREE.SphereGeometry( 20, 10, 10 );
 	        
 	        // objects 
-	        this.material.robot   = new THREE.MeshLambertMaterial({shading: THREE.shading});
-	        this.material.wall    = new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.shading});
-	        this.material.food    = new THREE.MeshLambertMaterial({color: 0x999900, shading: THREE.shading});
+	        this.material.robot   = new THREE.MeshLambertMaterial({shading: THREE.SmoothShading});
+	        this.material.wall    = new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.SmoothShading});
+	        this.material.food    = new THREE.MeshLambertMaterial({color: 0x999900, shading: THREE.SmoothShading});
 
 	        prepare_mesh_map();
 	       
@@ -130,9 +137,10 @@
         // Robts
         
         if(!o && type>0 && type<50){
-        	var robot = rw.robot_manager.get_robot(type);
-        	o = new THREE.Mesh(self.geometry.robot, new THREE.MeshLambertMaterial({shading: THREE.shading}));
-        	o.materials[0].color = new THREE.Color('0x'+rw.arena.color[robot.id]);
+        	var robot = rw.robot_manager.get_robot(type),
+        		rgb = '#'+rw.arena.color[robot.id];
+        	o = new THREE.Mesh(self.geometry.robot, new THREE.MeshLambertMaterial({shading: THREE.SmoothShading, color: new THREE.Color(rgb)}));
+        	// o.material.color = new THREE.Color('0x'+rw.arena.color[robot.id]);
         	robot.gfx = o;
         }
 
