@@ -14,6 +14,8 @@
 
 		graphic: null,
 
+		color: ['','A50A02','43A2A6','FA4E2C','2E2525'],
+
 		init: function(driver_name){
 
 			// --- configuration
@@ -35,8 +37,6 @@
 			self.graphic = d;
 			self.graphic.init();
 
-			
-			
 
 	        // --- challenge init
 	        
@@ -50,8 +50,6 @@
 		},
 
 		add: function(type, x, y){
-			log(data.map);
-			console.log(x,y);
 			data.map[x][y] = type;
 		},
 
@@ -62,6 +60,48 @@
 		set_handler: function(m){
 			rw = m;
 		},
+
+		action: {
+
+			move: function(robot, x,y){
+
+				// have we move point ?
+				
+				if(rw.robot_manager.get('move')[robot.id]<1)	return false;
+
+
+				// limits of the map
+				
+	            if(x<0 || x>=data.width || y<0 || y>=data.width)                return false;
+
+	            var c = data.map[x][y];
+
+	            if(c==0 || (c>=50 && c<100))
+	            {
+	                data.map[robot.position.x][robot.position.y]    = EMPTY;
+	                data.map[x][y]                                  = robot.id;
+	                robot.position                                  = {x:x, y:y};
+	                robot.gfx.position.x                            = (x * 50);
+	                robot.gfx.position.z                            = (y * 50);
+	                log('Robot '+robot.name+' move to '+x+'/'+y);
+	                rw.robot_manager.get('move')[robot.id]--;
+	                return true;
+	            }
+			},
+
+			look: function(robot, x, y){
+
+				var m = data.map;
+		        var l = 'Robot '+robot.name+' look at '+x+'/'+y;
+		        
+		        // limits
+		        if(x<0 || x>=data.width || y<0 || y>=data.width)                return -1;
+		        
+		        var r = m[x][y];
+		        arena.log(l+': '+r);
+		        return r;
+			}
+		}
 	};
 
 	var self 			= arena;

@@ -2,8 +2,6 @@
 
 	var rw;
 	var mesh = [];
-
-	var robot_color= ['','0xff0000','0x00ff00','0x0000ff','0xffffff'];
 	
 	var arena_webgl = {
 
@@ -118,10 +116,6 @@
 
 	function add_mesh(type,x,y)
     {
-    	console.log(type,x,y);
-
-        // laisse libre les 4 coins
-        //if((x==0 && y==0) || (x==this.width && y==0) || (x==this.width && y==this.width) || (x==0 && y==this.width))    return;
         
         var o;
         switch(type){
@@ -138,7 +132,7 @@
         if(!o && type>0 && type<50){
         	var robot = rw.robot_manager.get_robot(type);
         	o = new THREE.Mesh(self.geometry.robot, new THREE.MeshLambertMaterial({shading: THREE.shading}));
-        	o.materials[0].color = new THREE.Color(robot_color[robot.id]);
+        	o.materials[0].color = new THREE.Color('0x'+rw.arena.color[robot.id]);
         	robot.gfx = o;
         }
 

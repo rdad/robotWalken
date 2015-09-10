@@ -131,12 +131,13 @@
 		
 		var participants 	= rw.robot_manager.get('participant'),
 			list 			= rw.robot_manager.get('list'),
-			rob 			= '', r, i, c;
+			rob 			= '', r, i, c, color;
 
 		if(list){
 			for(i in list){
 				c 		 = (participants.indexOf(parseInt(i)) >= 0) ? ' checked' : '';
-				rob 	+= "<input type='checkbox'"+c+" value='"+i+"'> "+list[i].name+"<br>";
+				color 	 = rw.arena.color[parseInt(i)];
+				rob 	+= "<input type='checkbox'"+c+" value='"+i+"'><span style='color:#"+color+"'> "+list[i].name+"</span><br>";
 			}			
 		}
 

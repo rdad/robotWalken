@@ -7,10 +7,12 @@
 		nb_robot: 0,
 		nb_loaded: 0,
 		nb_max_robot: 4,
-		max_loading_ms: 2000
+		max_loading_ms: 2000,
+		move: {}
 	};
 
 	var p = {};
+	
 
 	var rw;
 
@@ -34,8 +36,33 @@
 			p.timeout = setTimeout(end_robot_loading, data.max_loading_ms);	
 		},
 
-		update: function(){
+		new_turn: function(){
 
+			for(var id in data.move){
+				data.move[id]++;
+			}
+		},
+
+		init_robots: function(){
+
+			// init robots
+			
+			for(var id in data.list){
+				data.list[id].init();
+			}
+
+			// init move table
+			
+			for(var id in data.list){
+				data.move[id] = 0;
+			}
+		},
+
+		update_robots: function(){
+
+			for(var id in data.list){
+				data.list[id].update();
+			}
 		},
 
 		set_participant_list: function(list){
@@ -92,6 +119,7 @@
 			}
 
 			// GREAT : a new robot !
+			// @todo : on attribut un id unique et aléatoire pour éviter le cheeting
 			
 			data.list[robot.id] = robot;
 			data.nb_robot++;

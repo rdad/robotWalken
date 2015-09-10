@@ -81,6 +81,8 @@
 
 		run: function(){
 
+			rw.robot_manager.init_robots();
+
 			document.getElementById('homescreen').style.display = 'none';
 			document.getElementById('arena').style.display 		= 'block';
 
@@ -91,9 +93,8 @@
 
 		running: function(){
 
-	        //requestAnimationFrame( arena.run );
-
-	        rw.robot_manager.update();
+			rw.robot_manager.new_turn();
+	        rw.robot_manager.update_robots();
 	        rw.arena.graphic.render();
 	        rw.arena.graphic.stats.update();
 	        

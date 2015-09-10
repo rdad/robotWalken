@@ -16,13 +16,17 @@
 
 		init_map: function(){
 
-			var w = self.config.map.width,
-				h = self.config.map.height,
-				nb = 10, j;
+			var w = self.config.map.width-1,
+				h = self.config.map.height-1,
+				nb = 10, j,x,y;
 
 			for(j=0; j<nb; j++)
-	        {            
-	            rw.arena.add(WALL,parseInt(Math.random()*w),parseInt(Math.random()*h));          
+	        { 
+	        	x = parseInt(Math.random()*w);
+	        	y = parseInt(Math.random()*h);
+
+        		if((x==0 && y==0) || (x==w && y==0) || (x==w && y==h) || (x==0 && y==h))    continue;           
+	            rw.arena.add(WALL,x,y);          
 	        }
 			log('[challenge] init : Map is updated');
 		},
@@ -33,9 +37,11 @@
 				w = self.config.map.width-1,
 				h = self.config.map.height-1,
 				start = [[0,0],[w,h],[w,0],[0,h]],
-				robots = rw.robot_manager.get('list');
+				robots = rw.robot_manager.get('list'),
+				participant = rw.robot_manager.get('participant');
 
 			for (id in robots) {
+				if(participant.indexOf(parseInt(id))<0 )	continue;
 				p = robots[id].position;
 				p.x = start[nb][0];
 				p.y = start[nb][1];

@@ -16,7 +16,7 @@
 	    while(found==false){
 	        var p = this.dir[this.v];
 	        var l = this.look(p);
-	        if(l==0){
+	        if(l==EMPTY){
 	            this.move(p);
 	            found = true;
 	        }else{
