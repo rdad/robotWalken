@@ -61,7 +61,12 @@
 		update_robots: function(){
 
 			for(var id in data.list){
-				data.list[id].update();
+				
+				(function(){
+					var arena = rw.arena;
+					data.list[id].update();
+				})();
+				
 			}
 		},
 

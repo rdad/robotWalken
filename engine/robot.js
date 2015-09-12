@@ -30,7 +30,7 @@ Robot.prototype = {
         pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return rw.arena.action.look(this, pos.x, pos.y);
+        return arena.action.look(this, pos.x, pos.y);
     },
     eat: function(direction) {
         
