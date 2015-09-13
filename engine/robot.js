@@ -15,13 +15,17 @@ var Robot = function (name, id, author)
 
 Robot.prototype = {
 
+    set_gfx: function(gfx){
+        this.gfx = gfx;
+    },
+
     move : function(direction)
     {
         var new_pos = {x:0, y:0};
         new_pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         new_pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return rw.arena.action.move(this, new_pos.x, new_pos.y);
+        return robotWalken.action.move(this, new_pos.x, new_pos.y);
          
     },
     look: function(direction) {
@@ -30,7 +34,7 @@ Robot.prototype = {
         pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return arena.action.look(this, pos.x, pos.y);
+        return robotWalken.action.look(this, pos.x, pos.y);
     },
     eat: function(direction) {
         
@@ -38,7 +42,7 @@ Robot.prototype = {
         pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return arena.robot.eat(this, pos.x, pos.y);
+        return robotWalken.action.robot.eat(this, pos.x, pos.y);
     },
     
     getMyPosition: function(){
@@ -51,7 +55,7 @@ Robot.prototype = {
         pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return arena.robot_hit(this, pos.x, pos.y);
+        return robotWalken.action.robot_hit(this, pos.x, pos.y);
     },
     bit: function(direction){
         
@@ -59,7 +63,7 @@ Robot.prototype = {
         pos.x   = (direction>5) ? this.position.x + (direction-11) : this.position.x;
         pos.y   = (direction<5) ? this.position.y + (direction-1) : this.position.y;
         
-        return arena.robot_bit(this, pos.x, pos.y);
+        return robotWalken.action.robot_bit(this, pos.x, pos.y);
     },
     sleep:function(){
         

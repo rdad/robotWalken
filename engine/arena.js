@@ -98,7 +98,7 @@
 		        if(x<0 || x>=data.width || y<0 || y>=data.width)                return -1;
 		        
 		        var r = m[x][y];
-		        arena.log(l+': '+r);
+		        log(l+': '+r);
 		        return r;
 			}
 		}

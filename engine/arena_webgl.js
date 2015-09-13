@@ -95,6 +95,7 @@
 	            {
 	                if(map[x][y]>EMPTY){
 	                	add_mesh(map[x][y], x, y);
+	                	log('XXX XXX');
 	                }
 	            }
 	        }
@@ -134,14 +135,14 @@
                 break;
         }
 
-        // Robts
+        // Robots
         
-        if(!o && type>0 && type<50){
+        if(typeof o == 'undefined' && type>0 && type<50){
         	var robot = rw.robot_manager.get_robot(type),
         		rgb = '#'+rw.arena.color[robot.id];
         	o = new THREE.Mesh(self.geometry.robot, new THREE.MeshLambertMaterial({shading: THREE.SmoothShading, color: new THREE.Color(rgb)}));
-        	// o.material.color = new THREE.Color('0x'+rw.arena.color[robot.id]);
-        	robot.gfx = o;
+        	robot.set_gfx(o);
+        	log(robot);
         }
 
         o.position.x = x*50;

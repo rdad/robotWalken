@@ -41,6 +41,9 @@
 			if(!data.debug){
 				delete self.get_module;
 			}
+
+			this.action = rw.arena.action;
+
 			return this;
 		},
 
