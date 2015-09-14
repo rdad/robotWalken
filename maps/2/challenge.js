@@ -5,12 +5,12 @@
 	var challenge = {
 
 		config: {
-			id: 1,
-			title: 'Escape! I',
+			id: 2,
+			title: 'Escape! II',
 			resume: 'Your robot must found the output door',
 			map: {
-				width: 10,
-				height: 10
+				width: 20,
+				height: 20
 			}
 		},
 
@@ -18,18 +18,18 @@
 
 			var w = self.config.map.width-1,
 				h = self.config.map.height-1,
-				nb = 10, j,x,y;
+				nb = 4, j,x = 4,y;
 
 			for(j=0; j<nb; j++)
-	        { 
-	        	x = parseInt(Math.random()*w);
-	        	y = parseInt(Math.random()*h);
-
-        		if((x==0 && y==0) || (x==w && y==0) || (x==w && y==h) || (x==0 && y==h))    continue;           
-	            rw.arena.add(WALL,x,y);          
+	        {
+	        	y = parseInt(Math.random()*h); 
+	        	build_wall(x,y); 
+	        	x = x+parseInt(Math.random()*3)+2;
+	        		       
 	        }
 
-	        rw.arena.add(DOOR, parseInt(Math.random()*w),parseInt(Math.random()*h));
+	        rw.arena.add(DOOR,w,parseInt(Math.random()*h));
+
 
 			log('[challenge] init : Map is updated');
 		},
@@ -70,5 +70,16 @@
 
 	var self 			= challenge;
 	ctx.add_module('challenge', challenge);
+
+	function build_wall(x, y){
+
+		var h = self.config.map.height,
+			c;
+
+			for(j=0; j<h; j++){
+        		c = (j == y) ? EMPTY : WALL;           
+	            rw.arena.add(c,x,j);          
+	        }
+	}
 
 })(robotWalken);

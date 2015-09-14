@@ -87,7 +87,7 @@
 	                robot.position                                  = {x:x, y:y};
 	                robot.gfx.position.x                            = (x * 50);
 	                robot.gfx.position.z                            = (y * 50);
-	                log('Robot '+robot.name+' move to '+x+'/'+y);
+	                //log('Robot '+robot.name+' move to '+x+'/'+y);
 	                rw.robot_manager.get('move')[robot.id]--;
 	                return true;
 	            }
@@ -102,7 +102,7 @@
 		        if(x<0 || x>=data.width || y<0 || y>=data.width)                return -1;
 		        
 		        var r = m[x][y];
-		        log(l+': '+r);
+		        //log(l+': '+r);
 		        return r;
 			}
 		}

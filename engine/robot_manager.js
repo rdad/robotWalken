@@ -47,24 +47,24 @@
 
 			// init robots
 			
-			for(var id in data.list){
-				data.list[id].init();
+			for(var j=0; j<data.participant.length; j++){
+				data.list[data.participant[j]].init();
 			}
 
 			// init move table
 			
-			for(var id in data.list){
-				data.move[id] = 0;
+			for(var j=0; j<data.participant.length; j++){
+				data.move[data.participant[j]] = 0;
 			}
 		},
 
 		update_robots: function(){
 
-			for(var id in data.list){
+			for(var j=0; j<data.participant.length; j++){
 				
 				(function(){
 					var arena = rw.arena;
-					data.list[id].update();
+					data.list[data.participant[j]].update();
 				})();
 				
 			}

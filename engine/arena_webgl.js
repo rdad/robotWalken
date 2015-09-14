@@ -7,8 +7,8 @@
 
 		width: 0,
 		height: 0,
-		geometry: {robot:null,wall:null,food:null},
-    	material: {robot:null,wall:null, food:null},
+		geometry: {robot:null,wall:null,food:null, door: null},
+    	material: {robot:null,wall:null, food:null, door: null},
 
 	    init: function(){
 	       
@@ -74,11 +74,13 @@
 	        this.geometry.robot   = new THREE.CylinderGeometry( 15, 25, 50, 10, 10);
 	        this.geometry.wall    = new THREE.BoxGeometry( 50, 50, 50 );
 	        this.geometry.food    = new THREE.SphereGeometry( 20, 10, 10 );
+	        this.geometry.door 	  = new THREE.TorusGeometry( 10, 10, 20, 10 );
 	        
 	        // objects 
 	        this.material.robot   = new THREE.MeshLambertMaterial({shading: THREE.SmoothShading});
 	        this.material.wall    = new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.SmoothShading});
 	        this.material.food    = new THREE.MeshLambertMaterial({color: 0x999900, shading: THREE.SmoothShading});
+	        this.material.door    = new THREE.MeshLambertMaterial({color: 0xff0000, shading: THREE.SmoothShading});
 
 	        prepare_mesh_map();
 	       
@@ -132,6 +134,10 @@
                 break;
             case FOOD:
                 o = new THREE.Mesh(self.geometry.food, self.material.food);
+                break;
+            case DOOR:
+                o = new THREE.Mesh(self.geometry.door, self.material.door);
+               //o.rotation = 90;
                 break;
         }
 
