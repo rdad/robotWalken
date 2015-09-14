@@ -30,6 +30,13 @@ body {
 	display: none;
 }
 
+#interface{
+	width:30%;
+	position: fixed;
+	right: 0;
+	top:0;
+}
+
 h2{
 	margin: 0;
 	font-size: 500%;

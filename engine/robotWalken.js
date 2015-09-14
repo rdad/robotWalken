@@ -6,7 +6,7 @@
 		version : 0.1,
 		debug: true,
 		display_driver: 'webgl',
-		time_step: 500,
+		time_step: 100,
 		default: {
 			map: {
 				width: 20,
@@ -98,6 +98,7 @@
 
 			rw.robot_manager.new_turn();
 	        rw.robot_manager.update_robots();
+	        rw.interface.update();
 	        rw.arena.graphic.render();
 	        rw.arena.graphic.stats.update();
 	        
@@ -152,6 +153,24 @@
 		}else{
 			if(type!='log')	console.log(txt);
 		}		
+	}
+
+	ctx.get_element = function(html, id, attrs){
+
+		var e = document.createElement( html );
+		if(id)	e.setAttribute('id',id);
+
+		if(attrs){
+			for(var a in attrs){
+				if(a == 'innerHTML'){
+					e.innerHTML = attrs[a];
+				}else{
+					e.setAttribute(a,attrs[a]);
+				}	
+			}
+		}
+
+		return e;
 	}
 
 })(window);

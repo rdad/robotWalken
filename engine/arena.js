@@ -37,6 +37,10 @@
 			self.graphic = d;
 			self.graphic.init();
 
+			// interface
+			
+			rw.interface.init();
+
 
 	        // --- challenge init
 	        
