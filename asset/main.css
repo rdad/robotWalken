@@ -31,16 +31,25 @@ body {
 }
 
 #interface{
-	width:30%;
-	position: fixed;
-	right: 0;
-	top:0;
+	width:20%;
+	position: absolute;
+	left: 0;
+	top:50px;
+	font-size: 400%;
+}
+
+h2, h3, h4 {
+	margin: 0;
+	color: #333;
+}
+
+.speed{
+	font-size: 20px;
+	color: #666;
 }
 
 h2{
-	margin: 0;
 	font-size: 500%;
-	color: #333;
 }
 
 button{
