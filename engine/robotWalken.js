@@ -6,7 +6,7 @@
 		version : 0.1,
 		debug: true,
 		display_driver: 'webgl',
-		time_step: 100,
+		time_step: 1000/60,
 		default: {
 			map: {
 				width: 20,
@@ -91,16 +91,19 @@
 
 			log("[robotWalken] running & kickin'");
 
+			rw.interface.running = true;
 			self.running();
 		},
 
 		running: function(){
 
-			rw.robot_manager.new_turn();
-	        rw.robot_manager.update_robots();
-	        rw.interface.update();
-	        rw.arena.graphic.render();
-	        rw.arena.graphic.stats.update();
+			if(rw.interface.running){
+				rw.robot_manager.new_turn();
+		        rw.robot_manager.update_robots();
+		        rw.interface.update();
+		        rw.arena.graphic.render();
+		        rw.arena.graphic.stats.update();
+	    	}
 	        
 	        setTimeout("robotWalken.running()",data.time_step);
 	    },

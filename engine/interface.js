@@ -11,6 +11,8 @@
 
 	var interface = {
 
+		running: false,
+
 		init: function(){
 
 			build_dom();
@@ -33,6 +35,22 @@
 		set_handler: function(m){
 			rw = m;
 		},
+
+		onKeyDown: function(e){
+
+			switch(e.keyCode){
+
+				// SPACE
+				
+				case 32:
+					self.running = !self.running;
+					log('[interface] space');
+					break;
+
+
+			}
+
+		}
 	};
 
 	var self 		= interface;
@@ -43,6 +61,7 @@
 
 	function prepare_events(){
 		
+		document.addEventListener("keydown", self.onKeyDown);
 	}
 
 

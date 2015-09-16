@@ -1,7 +1,9 @@
 (function(ctx){
 
 	var rw;
-	var mesh = [];
+	var mesh = [],
+		camera_position = [],
+		camera_id = 0;
 	
 	var arena_webgl = {
 
@@ -28,11 +30,16 @@
 	        var radius 	= 500;
 	        this.width 	= rw.arena.get('width');
 	        this.height = rw.arena.get('height');
+
+	        camera_position[0] = {x: this.width*.5*50, z: this.width*80};
+	        camera_position[1] = {x: this.width*80, z: this.width*50*.5};
+	        camera_position[2] = {x: this.width*.5*50, z: -this.width*30};
+	        camera_position[3] = {x: -this.width*30, z: this.width*50*.5};
 	        
 	        this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 			this.camera.position.y = 600;
-	        this.camera.position.z = this.width*80; //1600;
-	        this.camera.position.x = this.width*.5*50; //500; //this.width;
+	        this.camera.position.z = camera_position[camera_id].z; //1600;
+	        this.camera.position.x = camera_position[camera_id].x; //500; //this.width;
 			this.cameraTarget = new THREE.Vector3( this.width*25, 0, this.width*25 );
 
 	        // scene
@@ -84,9 +91,36 @@
 	        }
 
 	        prepare_mesh_map();
+
+	        document.addEventListener("keydown", self.onKeyDown);
 	       
 	        log('[arena] WebGL graphic driver inited');
 	    },
+
+	    onKeyDown: function(e){
+
+			switch(e.keyCode){
+
+				// LEFT
+				case 39:
+					camera_id++;
+					if(camera_id>=camera_position.length)	camera_id = 0;
+					move_camera();
+					break;
+
+				case 37:
+					camera_id--;
+					if(camera_id<0)	camera_id = camera_position.length-1;
+					move_camera();
+					log('[arena_webgl] turn camera');
+					break;
+				
+
+
+
+			}
+			log(e.keyCode);
+		},
 
 	    build_map: function(){
 
@@ -124,6 +158,20 @@
 
 
 	// --- PRIVATE
+
+	function move_camera(){
+
+		var tween = TweenMax.to(self.camera.position, 1, {
+			z: camera_position[camera_id].z,
+			x: camera_position[camera_id].x,
+			ease:Linear.easeInOut
+		});
+
+		//self.camera.position.z = camera_position[camera_id].z;
+	    //self.camera.position.x = camera_position[camera_id].x;
+		log('[arena_webgl] turn camera');
+
+	}
 
 	function add_mesh(type,x,y)
     {
