@@ -6,7 +6,8 @@
 		version : 0.1,
 		debug: true,
 		display_driver: 'webgl',
-		time_step: 1000/60,
+		timer: 0,
+		time_step: 30,
 		default: {
 			map: {
 				width: 20,
@@ -18,6 +19,8 @@
 	var rw = {
 		config: data
 	};
+
+	var timer = 0;
 
 
 	var app = {
@@ -97,15 +100,25 @@
 
 		running: function(){
 
+			requestAnimationFrame(robotWalken.running);
+
 			if(rw.interface.running){
-				rw.robot_manager.new_turn();
-		        rw.robot_manager.update_robots();
-		        rw.interface.update();
-		        rw.arena.graphic.render();
-		        rw.arena.graphic.stats.update();
+
+				data.timer++;
+				if(data.timer > data.time_step){
+
+					data.timer = 0;
+
+					rw.robot_manager.new_turn();
+			        rw.robot_manager.update_robots();
+			        rw.interface.update();
+				}
 	    	}
+
+	    	rw.arena.graphic.render();
+			rw.arena.graphic.stats.update();
 	        
-	        setTimeout("robotWalken.running()",data.time_step);
+	        //setTimeout("robotWalken.running()",data.time_step);
 	    },
 
 		pause: function(){

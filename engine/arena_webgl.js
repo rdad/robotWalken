@@ -114,12 +114,7 @@
 					move_camera();
 					log('[arena_webgl] turn camera');
 					break;
-				
-
-
-
 			}
-			log(e.keyCode);
 		},
 
 	    build_map: function(){
