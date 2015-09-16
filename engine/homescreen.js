@@ -152,23 +152,6 @@
 
 	}
 
-	function get_element(html, id, attrs){
-
-		var e = document.createElement( html );
-		if(id)	e.setAttribute('id',id);
-
-		if(attrs){
-			for(var a in attrs){
-				if(a == 'innerHTML'){
-					e.innerHTML = attrs[a];
-				}else{
-					e.setAttribute(a,attrs[a]);
-				}	
-			}
-		}
-
-		return e;
-	}
-		
+	
 
 })(robotWalken);

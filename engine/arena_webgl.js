@@ -31,22 +31,14 @@
 	        
 	        this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 			this.camera.position.y = 600;
-	        this.camera.position.z = 1600;
-	        this.camera.position.x = 500; //this.width;
+	        this.camera.position.z = this.width*80; //1600;
+	        this.camera.position.x = this.width*.5*50; //500; //this.width;
 			this.cameraTarget = new THREE.Vector3( this.width*25, 0, this.width*25 );
 
 	        // scene
 
 	        this.scene = new THREE.Scene();
 
-	        // Lights
-
-	        /*var ambientLight = new THREE.AmbientLight( 0x444444 );
-	        this.scene.add( ambientLight );
-
-	        var dirLight = new THREE.DirectionalLight( 0xFFFFFF );
-	        dirLight.position.set( -1, 1, 0 ).normalize();
-	        this.scene.add( dirLight );*/
 
 	        this.scene.add( new THREE.AmbientLight( 0x222222 ) );
 
@@ -81,6 +73,15 @@
 	        this.material.wall    = new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.SmoothShading});
 	        this.material.food    = new THREE.MeshLambertMaterial({color: 0x999900, shading: THREE.SmoothShading});
 	        this.material.door    = new THREE.MeshLambertMaterial({color: 0xff0000, shading: THREE.SmoothShading});
+
+
+	        // trident
+	        
+	        if(robotWalken.get('debug') === true){
+	        	rw.arena.graphic.scene.add( new THREE.ArrowHelper(new THREE.Vector3( 1, 0, 0 ), new THREE.Vector3( -25, -25, -25 ), 50, 0xff0000, 10, 20) );
+	        	rw.arena.graphic.scene.add( new THREE.ArrowHelper(new THREE.Vector3( 0, 1, 0 ), new THREE.Vector3( -25, -25, -25 ), 50, 0x00ff00, 10, 20) );
+	        	rw.arena.graphic.scene.add( new THREE.ArrowHelper(new THREE.Vector3( 0, 0, 1 ), new THREE.Vector3( -25, -25, -25 ), 50, 0x0000ff, 10, 20) );
+	        }
 
 	        prepare_mesh_map();
 	       
