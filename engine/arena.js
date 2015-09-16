@@ -87,7 +87,6 @@
 	                robot.position                                  = {x:x, y:y};
 	                robot.gfx.position.x                            = (x * 50);
 	                robot.gfx.position.z                            = (y * 50);
-	                //log('Robot '+robot.name+' move to '+x+'/'+y);
 	                rw.robot_manager.get('move')[robot.id]--;
 	                return true;
 	            }
@@ -113,7 +112,7 @@
 
 
 	// --- PRIVATE
-	
+
 	function map_reset(){
 
 		var lined,y,x;

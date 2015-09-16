@@ -1,16 +1,18 @@
 (function(ctx){
 
 	var rw;
+
+	var nb_spot = 0;
 	
 	var challenge = {
 
 		config: {
-			id: 1,
-			title: 'Escape! I',
-			resume: 'Your robot must found the output door',
+			id: 3,
+			title: 'Energy field',
+			resume: 'In a field full of stones, your robot must collecte Energy spots (ENERGY).<br>The winner will be the one who has collected the most energy spots',
 			map: {
-				width: 10,
-				height: 10
+				width: 19,
+				height: 19
 			}
 		},
 
@@ -18,21 +20,29 @@
 
 			var w = self.config.map.width-1,
 				h = self.config.map.height-1,
-				nb = 10, j,x,y;
+				nb = 4, j,x = 4,y;
 
-			for(j=0; j<nb; j++)
+			// Walls
+			
+			for(var y = 1; y<18; y+=2){
+				for(x=1; x<18; x+=2)
+		        {
+		        	rw.arena.add(WALL,x,y);     		       
+		        }
+			}
+
+			// Energies
+			for(j=0; j<10; j++)
 	        { 
 	        	x = parseInt(Math.random()*w);
 	        	y = parseInt(Math.random()*h);
 
         		if((x==0 && y==0) || (x==w && y==0) || (x==w && y==h) || (x==0 && y==h))    continue;           
-	            rw.arena.add(WALL,x,y);          
+	            rw.arena.add(ENERGY,x,y); 
+
+	            nb_spot++;         
 	        }
 
-	        rw.arena.add(DOOR, parseInt(Math.random()*w),parseInt(Math.random()*h));
-
-	        rw.arena.add(BUTTON, parseInt(Math.random()*w),parseInt(Math.random()*h));
-	        rw.arena.add(HOLE, parseInt(Math.random()*w),parseInt(Math.random()*h));
 
 			log('[challenge] init : Map is updated');
 		},
@@ -73,5 +83,16 @@
 
 	var self 			= challenge;
 	ctx.add_module('challenge', challenge);
+
+	function build_wall(x, y){
+
+		var h = self.config.map.height,
+			c;
+
+			for(j=0; j<h; j++){
+        		c = (j == y) ? EMPTY : WALL;           
+	            rw.arena.add(c,x,j);          
+	        }
+	}
 
 })(robotWalken);

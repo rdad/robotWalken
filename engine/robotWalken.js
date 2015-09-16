@@ -20,7 +20,8 @@
 		config: data
 	};
 
-	var timer = 0;
+	var timer = 0,
+		raf_id;
 
 
 	var app = {
@@ -100,7 +101,7 @@
 
 		running: function(){
 
-			requestAnimationFrame(robotWalken.running);
+			raf_id = requestAnimationFrame(robotWalken.running);
 
 			if(rw.interface.running){
 
@@ -112,13 +113,17 @@
 					rw.robot_manager.new_turn();
 			        rw.robot_manager.update_robots();
 			        rw.interface.update();
+			        rw.challenge.update();
+
+			        var winner = rw.challenge.win();
+			        if(winner !== false){
+			        	game_over(winner);
+			        }
 				}
 	    	}
 
 	    	rw.arena.graphic.render();
 			rw.arena.graphic.stats.update();
-	        
-	        //setTimeout("robotWalken.running()",data.time_step);
 	    },
 
 		pause: function(){
@@ -161,6 +166,13 @@
 
 	// --- PRIVATE
 
+	function game_over(winner){
+
+		var winner_name = rw.robot_manager.get_robot(parseInt(winner)).name;
+		log('[robotWalken] GAME OVER. The winner is '+winner_name);
+		cancelAnimationFrame(raf_id);
+		rw.interface.game_over();
+	}
 
 	ctx.log = function(txt, type){
 

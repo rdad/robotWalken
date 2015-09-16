@@ -60,7 +60,7 @@
 		},
 
 		win: function(){
-
+			return false;
 		},
 
 		set_handler: function(m){

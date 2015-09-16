@@ -52,46 +52,6 @@
 
 	        this.scene = new THREE.Scene();
 
-	        // Lights
-	        
-	        this.scene.add( new THREE.AmbientLight( 0x222222 ) );
-
-			var light = new THREE.PointLight( 0xffffff );
-			light.position.copy( this.camera.position );
-			light.position.y = 100;
-			//light.castShadow = true;
-			this.scene.add( light );
-
-			var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-			dirLight.color.setHSL( 0.1, 1, 0.95 );
-			dirLight.position.set( -1, 1.75, 1 );
-			dirLight.position.multiplyScalar( 50 );
-
-			dirLight.castShadow = true;
-			dirLight.shadowMapWidth = 2048;
-			dirLight.shadowMapHeight = 2048;
-
-			this.scene.add( dirLight );
-
-			/*var d = 50;
-
-				dirLight.shadowCameraLeft = -d;
-				dirLight.shadowCameraRight = d;
-				dirLight.shadowCameraTop = d;
-				dirLight.shadowCameraBottom = -d;
-
-				dirLight.shadowCameraFar = 3500;
-				dirLight.shadowBias = -0.0001;
-				dirLight.shadowDarkness = 0.35;*/
-
-			// LIGHTS
-
-				/*var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-				hemiLight.color.setHSL( 0.6, 1, 0.6 );
-				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
-				hemiLight.position.set( 0, 500, 0 );
-				this.scene.add( hemiLight );*/
-
 	        // stats
 	        
 	        this.stats = new Stats();
@@ -113,6 +73,34 @@
 
 	        var wireframe = new THREE.WireframeHelper( this.plane , 0xffffff );
 	        rw.arena.graphic.scene.add( wireframe );
+
+
+	        // Lights
+	        
+	        this.scene.add( new THREE.AmbientLight( 0x222222 ) );
+
+			var light = new THREE.PointLight( 0xffffff );
+			light.position.copy( this.camera.position );
+			light.position.y = 50;
+
+			this.scene.add( light );
+
+			var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+			dirLight.color.setHSL( 0.1, 1, 0.95 );
+			dirLight.position.set( this.width*10, 400, this.width*5 );
+
+			dirLight.castShadow 		= true;
+			dirLight.shadowMapWidth 	= 2048;
+			dirLight.shadowMapHeight 	= 2048;
+			//dirLight.shadowCameraVisible= true;
+
+			dirLight.shadowBias 		= -0.0001;
+			dirLight.shadowDarkness 	= 0.45;
+
+			dirLight.target = this.plane;
+
+
+			this.scene.add( dirLight );
 	        
 
 	        build_mesh_library();
@@ -211,9 +199,6 @@
 			y: camera_y,
 			ease:Linear.easeInOut
 		});
-
-		//self.camera.position.z = camera_position[camera_id].z;
-	    //self.camera.position.x = camera_position[camera_id].x;
 		log('[arena_webgl] turn camera');
 
 	}
@@ -291,7 +276,7 @@
     	mesh_library[DOOR] = new THREE.Mesh(new THREE.BoxGeometry( 50, 100, 50 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading, opacity: .7, transparent: true}));
     
     	// Energy    	
-    	mesh_library[ENERGY] = new THREE.Mesh(new THREE.SphereGeometry( 15, 10, 10 ), new THREE.MeshPhongMaterial({color: 0xF9CB63}));
+    	mesh_library[ENERGY] = new THREE.Mesh(new THREE.SphereGeometry( 15, 10, 10 ), new THREE.MeshPhongMaterial({color: 0xffffff}));
     
     	// Energy    	
     	mesh_library[LASER]  = new THREE.Mesh(new THREE.CylinderGeometry( 1, 25, 60, 3, 1 ), new THREE.MeshPhongMaterial({color: 0x7182F2}));
