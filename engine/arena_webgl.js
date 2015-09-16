@@ -3,7 +3,10 @@
 	var rw;
 	var mesh = [],
 		camera_position = [],
-		camera_id = 0;
+		camera_id 		= 0,
+		camera_y  		= 600;
+
+	var mesh_library = {};
 	
 	var arena_webgl = {
 
@@ -23,6 +26,8 @@
 	        this.renderer = new THREE.WebGLRenderer( {antialias: true} );
 	        this.renderer.setClearColor( 0xd4d1be );
 	        this.renderer.setSize( window.innerWidth, window.innerHeight );
+	        this.renderer.shadowMapEnabled = true;
+	        this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
 
 	        this.container.appendChild( this.renderer.domElement );
 
@@ -37,21 +42,55 @@
 	        camera_position[3] = {x: -this.width*30, z: this.width*50*.5};
 	        
 	        this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-			this.camera.position.y = 600;
+			this.camera.position.y = camera_y; //600;
 	        this.camera.position.z = camera_position[camera_id].z; //1600;
 	        this.camera.position.x = camera_position[camera_id].x; //500; //this.width;
 			this.cameraTarget = new THREE.Vector3( this.width*25, 0, this.width*25 );
+
 
 	        // scene
 
 	        this.scene = new THREE.Scene();
 
-
+	        // Lights
+	        
 	        this.scene.add( new THREE.AmbientLight( 0x222222 ) );
 
 			var light = new THREE.PointLight( 0xffffff );
 			light.position.copy( this.camera.position );
+			light.position.y = 100;
+			//light.castShadow = true;
 			this.scene.add( light );
+
+			var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+			dirLight.color.setHSL( 0.1, 1, 0.95 );
+			dirLight.position.set( -1, 1.75, 1 );
+			dirLight.position.multiplyScalar( 50 );
+
+			dirLight.castShadow = true;
+			dirLight.shadowMapWidth = 2048;
+			dirLight.shadowMapHeight = 2048;
+
+			this.scene.add( dirLight );
+
+			/*var d = 50;
+
+				dirLight.shadowCameraLeft = -d;
+				dirLight.shadowCameraRight = d;
+				dirLight.shadowCameraTop = d;
+				dirLight.shadowCameraBottom = -d;
+
+				dirLight.shadowCameraFar = 3500;
+				dirLight.shadowBias = -0.0001;
+				dirLight.shadowDarkness = 0.35;*/
+
+			// LIGHTS
+
+				/*var hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemiLight.color.setHSL( 0.6, 1, 0.6 );
+				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
+				hemiLight.position.set( 0, 500, 0 );
+				this.scene.add( hemiLight );*/
 
 	        // stats
 	        
@@ -62,25 +101,21 @@
 
 	        // grid
 	        var w = this.width * 50;
-	        this.plane = new THREE.Mesh( new THREE.PlaneGeometry( this.width*50, this.height*50, this.width, this.height ), new THREE.MeshBasicMaterial( {color: 0x555555, wireframe: true} ) );
+	        var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
+			groundMat.color.setHSL( 0.095, 1, 0.75 );
+	        this.plane = new THREE.Mesh( new THREE.PlaneGeometry( this.width*50, this.height*50, this.width, this.height ), groundMat); // new THREE.MeshBasicMaterial( {color: 0x555555, wireframe: true} ) );
 	        this.plane.rotation.x = - 90 * Math.PI / 180;
 	        this.plane.position.x = (50*(this.width*.5))-25;
 	        this.plane.position.z = (50*(this.width*.5))-25;
 	        this.plane.position.y = -25;
+	        this.plane.receiveShadow = true;
 	        rw.arena.graphic.scene.add( this.plane );
-	        
-	        // geometry        
-	        this.geometry.robot   = new THREE.CylinderGeometry( 15, 25, 50, 10, 10);
-	        this.geometry.wall    = new THREE.BoxGeometry( 50, 50, 50 );
-	        this.geometry.food    = new THREE.SphereGeometry( 20, 10, 10 );
-	        this.geometry.door 	  = new THREE.TorusGeometry( 10, 10, 20, 10 );
-	        
-	        // objects 
-	        this.material.robot   = new THREE.MeshLambertMaterial({shading: THREE.SmoothShading});
-	        this.material.wall    = new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.SmoothShading});
-	        this.material.food    = new THREE.MeshLambertMaterial({color: 0x999900, shading: THREE.SmoothShading});
-	        this.material.door    = new THREE.MeshLambertMaterial({color: 0xff0000, shading: THREE.SmoothShading});
 
+	        var wireframe = new THREE.WireframeHelper( this.plane , 0xffffff );
+	        rw.arena.graphic.scene.add( wireframe );
+	        
+
+	        build_mesh_library();
 
 	        // trident
 	        
@@ -108,11 +143,26 @@
 					move_camera();
 					break;
 
+				// RIGHT
 				case 37:
 					camera_id--;
 					if(camera_id<0)	camera_id = camera_position.length-1;
 					move_camera();
 					log('[arena_webgl] turn camera');
+					break;
+
+				// UP
+				case 38:
+					camera_y = 600;
+					move_camera();
+					log('[interface] speed up : '+rw.config.time_step);
+					break;
+
+				// DOWN
+				case 40:
+					camera_y = 100;
+					move_camera();
+					log('[interface] speed down : '+rw.config.time_step);
 					break;
 			}
 		},
@@ -127,7 +177,6 @@
 	            {
 	                if(map[x][y]>EMPTY){
 	                	add_mesh(map[x][y], x, y);
-	                	log('XXX XXX');
 	                }
 	            }
 	        }
@@ -156,9 +205,10 @@
 
 	function move_camera(){
 
-		var tween = TweenMax.to(self.camera.position, 1, {
+		var tween = TweenMax.to(self.camera.position, .6, {
 			z: camera_position[camera_id].z,
 			x: camera_position[camera_id].x,
+			y: camera_y,
 			ease:Linear.easeInOut
 		});
 
@@ -170,36 +220,44 @@
 
 	function add_mesh(type,x,y)
     {
-        
-        var o;
-        switch(type){
-            case WALL:
-                o = new THREE.Mesh(self.geometry.wall, self.material.wall);
-                break;
-            case FOOD:
-                o = new THREE.Mesh(self.geometry.food, self.material.food);
-                break;
-            case DOOR:
-                o = new THREE.Mesh(self.geometry.door, self.material.door);
-               //o.rotation = 90;
-                break;
-        }
-
-        // Robots
-        
-        if(typeof o == 'undefined' && type>0 && type<50){
-        	var robot = rw.robot_manager.get_robot(type),
-        		rgb = '#'+rw.arena.color[robot.id];
-        	o = new THREE.Mesh(self.geometry.robot, new THREE.MeshLambertMaterial({shading: THREE.SmoothShading, color: new THREE.Color(rgb)}));
-        	robot.set_gfx(o);
-        	log(robot);
-        }
+		if(type>0 && type<50){
+			var o = new THREE.Mesh(mesh_library[ROBOT].geometry.clone(), mesh_library[ROBOT].material.clone());
+			var robot = rw.robot_manager.get_robot(type);
+			rgb = '#'+rw.arena.color[robot.id];
+			o.material.color = new THREE.Color(rgb);
+			robot.set_gfx(o);
+		}else{
+			var o = mesh_library[type].clone();
+		}
 
         o.position.x = x*50;
         o.position.z = y*50;
+        o.castShadow = true;
+		//o.receiveShadow = true;
         
         mesh[x][y] = o;
         self.scene.add(o);
+
+        // Door
+        if(type==DOOR){
+        	o.position.y += 25;
+
+        	var o2 = new THREE.Mesh(new THREE.BoxGeometry( 40, 90, 40 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading}));
+        	o2.position.x = x*50;
+        	o2.position.z = y*50;
+        	o2.position.y += 20;
+        	self.scene.add(o2);
+        }
+
+        // Button
+        if(type==BUTTON){
+        	o.position.y -= 20;
+        }
+
+        // Hole
+        if(type==HOLE){
+        	o.position.y -= 25;
+        }
     }
     
     function del(x,y){
@@ -219,6 +277,31 @@
             }
             mesh.push(lined);
         }
+    }
+
+    function build_mesh_library(){
+
+	    // Robot	    
+	    mesh_library[ROBOT] = new THREE.Mesh(new THREE.CylinderGeometry( 15, 25, 50, 10, 10), new THREE.MeshLambertMaterial({color: 0xbbbbbb, shading: THREE.SmoothShading}));
+    
+    	// Wall    	
+    	mesh_library[WALL] = new THREE.Mesh(new THREE.BoxGeometry( 50, 50, 50 ), new THREE.MeshPhongMaterial( { color: 0xDEAF47, specular: 0x050505 } ));
+    
+    	// Door    	
+    	mesh_library[DOOR] = new THREE.Mesh(new THREE.BoxGeometry( 50, 100, 50 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading, opacity: .7, transparent: true}));
+    
+    	// Energy    	
+    	mesh_library[ENERGY] = new THREE.Mesh(new THREE.SphereGeometry( 15, 10, 10 ), new THREE.MeshPhongMaterial({color: 0xF9CB63}));
+    
+    	// Energy    	
+    	mesh_library[LASER]  = new THREE.Mesh(new THREE.CylinderGeometry( 1, 25, 60, 3, 1 ), new THREE.MeshPhongMaterial({color: 0x7182F2}));
+    
+    	// Button    	
+    	mesh_library[BUTTON]  = new THREE.Mesh(new THREE.CylinderGeometry( 20, 20, 5, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x09509D}));
+    
+    	// Button    	
+    	mesh_library[HOLE]   = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x000000}));
+
     }
 
 })(robotWalken);

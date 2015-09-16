@@ -49,8 +49,8 @@
 					log('[interface] space');
 					break;
 
-				// UP
-				case 38:
+				// 2
+				case 50:
 					rw.config.timer = 0;
 					speed_id--;
 					if(speed_id<0)	speed_id = 0;
@@ -58,8 +58,8 @@
 					log('[interface] speed up : '+rw.config.time_step);
 					break;
 
-				// DOWN
-				case 40:
+				// 1
+				case 49:
 					rw.config.timer = 0;
 					speed_id++;
 					if(speed_id>=speed_list.length)	speed_id = speed_list.length-1;
@@ -68,7 +68,7 @@
 					break;
 
 			}
-
+			log(e.keyCode);
 		}
 	};
 
