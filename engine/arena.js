@@ -76,7 +76,11 @@
 
 				// limits of the map
 				
-	            if(x<0 || x>=data.width || y<0 || y>=data.width)                return false;
+	            if(x<0 || x>=data.width || y<0 || y>=data.width){
+
+	            	rw.arena.graphic.animation.bump(robot, x,y);
+	            	return false;
+	            }                
 
 	            var c = data.map[x][y];
 
@@ -89,6 +93,10 @@
 	                robot.gfx.position.z                            = (y * 50);
 	                rw.robot_manager.get('move')[robot.id]--;
 	                return true;
+	            }else{
+
+	            	rw.arena.graphic.animation.bump(robot, x,y);
+	            	return false;
 	            }
 			},
 
@@ -101,7 +109,6 @@
 		        if(x<0 || x>=data.width || y<0 || y>=data.width)                return -1;
 		        
 		        var r = m[x][y];
-		        //log(l+': '+r);
 		        return r;
 			}
 		}

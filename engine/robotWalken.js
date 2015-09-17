@@ -212,6 +212,8 @@ const BOMB 		= 53;
 const HOLE 		= 54;
 const LASER 	= 55;
 
+const ANIM_BUMP = 80;
+
 const WALL      = 100;
 const ROBOT 	= 101;
 const DOOR 		= 102;

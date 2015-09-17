@@ -60,9 +60,11 @@
 	        this.container.appendChild( this.stats.domElement );
 
 	        // grid
-	        var w = this.width * 50;
-	        var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
+	        var w 			= this.width * 50,
+	        	groundMat 	= new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } );
+
 			groundMat.color.setHSL( 0.095, 1, 0.75 );
+
 	        this.plane = new THREE.Mesh( new THREE.PlaneGeometry( this.width*50, this.height*50, this.width, this.height ), groundMat); // new THREE.MeshBasicMaterial( {color: 0x555555, wireframe: true} ) );
 	        this.plane.rotation.x = - 90 * Math.PI / 180;
 	        this.plane.position.x = (50*(this.width*.5))-25;
@@ -183,6 +185,41 @@
 		set_handler: function(m){
 			rw = m;
 		},
+
+		animation: {
+
+			bump: function(robot, x,y){   	
+
+    			var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshBasicMaterial({color: 0xff0000, transparent: true, opacity: 0.6}));
+    			var selfc = self;
+    			o.position.x = x*50;
+        		o.position.z = y*50;
+        		self.scene.add(o);
+
+        		if(x == robot.position.x){
+        			o.position.z += (y < robot.position.y) ? 25 : -25;
+        			o.rotation.x = - 90 * Math.PI / 180;
+        		}else{
+        			o.position.x += (y < robot.position.y) ? 25 : -25;
+        			o.rotation.z = - 90 * Math.PI / 180;
+        		}
+        		
+        		var tween = TweenMax.to(o.scale, .4, {
+					x: 2,
+					y: 2,
+					z: 2,
+					ease:Cubic.easeInOut,
+					onUpdate: function(){
+						o.material.opacity -= 0.03;
+						log('UU');
+					},
+					onComplete: function(){
+						selfc.scene.remove(o);
+					}
+				});
+
+			}
+		}
 	};
 
 	var self = arena_webgl;
@@ -243,6 +280,8 @@
         if(type==HOLE){
         	o.position.y -= 25;
         }
+
+        return o;
     }
     
     function del(x,y){
@@ -278,15 +317,14 @@
     	// Energy    	
     	mesh_library[ENERGY] = new THREE.Mesh(new THREE.SphereGeometry( 15, 10, 10 ), new THREE.MeshPhongMaterial({color: 0xffffff}));
     
-    	// Energy    	
+    	// Laser    	
     	mesh_library[LASER]  = new THREE.Mesh(new THREE.CylinderGeometry( 1, 25, 60, 3, 1 ), new THREE.MeshPhongMaterial({color: 0x7182F2}));
     
     	// Button    	
     	mesh_library[BUTTON]  = new THREE.Mesh(new THREE.CylinderGeometry( 20, 20, 5, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x09509D}));
     
-    	// Button    	
+    	// Hole    	
     	mesh_library[HOLE]   = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x000000}));
-
     }
 
 })(robotWalken);
