@@ -218,6 +218,14 @@
 					}
 				});
 
+				var scramble = TweenMax.to(robot.gfx.position, .2, {
+					y: '+=20',
+					ease:Back.easeOut,
+					onComplete: function(){
+						scramble.reverse();
+					}
+				});
+
 			}
 		}
 	};
