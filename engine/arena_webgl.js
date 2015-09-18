@@ -188,10 +188,44 @@
 
 		animation: {
 
+			move: function(robot, x, y){
+
+				var anim_length = (rw.config.time_step * (1000/60))*0.001;
+				log(anim_length);
+				var tween = TweenMax.to(robot.gfx.position, anim_length, {
+					x: x * 50,
+					z: y * 50,
+					ease:Cubic.easeInOut
+				});
+			},
+
+			look: function(robot, x,y){
+
+				var o 			= new THREE.Mesh(new THREE.BoxGeometry( 50, 50, 1 ), new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.6}));
+    			var selfc 		= self;
+    			o.position.x 	= x*50;
+        		o.position.z 	= y*50;
+        		o.position.y 	-= 25;
+        		o.rotation.x 	= - 90 * Math.PI / 180;
+
+        		self.scene.add(o);
+
+        		var tween = TweenMax.to(o.material, .2, {
+					opacity: 0,
+					ease:Cubic.easeInOut,
+					onComplete: function(){
+						selfc.scene.remove(o);
+					}
+				});
+
+
+			},
 			bump: function(robot, x,y){   	
 
-    			var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshBasicMaterial({color: 0xff0000, transparent: true, opacity: 0.6}));
-    			var selfc = self;
+    			var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshBasicMaterial({color: 0xff0000, transparent: true, opacity: 0.6})),
+    				selfc = self,
+    				r = robot;
+
     			o.position.x = x*50;
         		o.position.z = y*50;
         		self.scene.add(o);
@@ -211,19 +245,16 @@
 					ease:Cubic.easeInOut,
 					onUpdate: function(){
 						o.material.opacity -= 0.03;
-						log('UU');
 					},
 					onComplete: function(){
 						selfc.scene.remove(o);
 					}
 				});
 
+        		robot.gfx.position.y += 10;
 				var scramble = TweenMax.to(robot.gfx.position, .2, {
-					y: '+=20',
-					ease:Back.easeOut,
-					onComplete: function(){
-						scramble.reverse();
-					}
+					y: 0,
+					ease:Back.easeOut
 				});
 
 			}

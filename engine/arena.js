@@ -89,9 +89,8 @@
 	                data.map[robot.position.x][robot.position.y]    = EMPTY;
 	                data.map[x][y]                                  = robot.id;
 	                robot.position                                  = {x:x, y:y};
-	                robot.gfx.position.x                            = (x * 50);
-	                robot.gfx.position.z                            = (y * 50);
 	                rw.robot_manager.get('move')[robot.id]--;
+	                rw.arena.graphic.animation.move(robot,x,y);
 	                return true;
 	            }else{
 
@@ -109,6 +108,7 @@
 		        if(x<0 || x>=data.width || y<0 || y>=data.width)                return -1;
 		        
 		        var r = m[x][y];
+		        rw.arena.graphic.animation.look(robot, x, y);
 		        return r;
 			}
 		}
