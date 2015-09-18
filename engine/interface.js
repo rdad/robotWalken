@@ -72,8 +72,14 @@
 		},
 
 		game_over: function(winner){
-			el_gameover.innerHTML = winner;
-			el_gameover.style.display = 'block';
+			el_gameover.innerHTML 		= winner;
+			el_gameover.style.opacity 	= 0;
+			el_gameover.style.display 	= 'block';
+
+			var t = TweenMax.to(el_gameover.style, .6, {
+					opacity: 1,
+					ease:Back.easeInOut
+				});
 		}
 	};
 

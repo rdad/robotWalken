@@ -1,6 +1,8 @@
 (function(ctx){
 
 	var rw;
+
+	var exit_door;
 	
 	var challenge = {
 
@@ -33,7 +35,7 @@
 
 	        rw.arena.add(BUTTON, parseInt(Math.random()*w),parseInt(Math.random()*h));
 
-	        rw.arena.add(HOLE, w,h-3);
+	        exit_door = rw.arena.add(EXIT, w,h-3);
 
 			log('[challenge] init : Map is updated');
 		},
@@ -64,7 +66,8 @@
 		},
 
 		win: function(){
-			return false;
+			
+			return rw.arena.get_robot_exit();
 		},
 
 		set_handler: function(m){

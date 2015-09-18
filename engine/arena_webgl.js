@@ -189,11 +189,27 @@
 
 		animation: {
 
+			exit: function(robot){
+
+				var r = robot;
+				var t = TweenMax.to(robot.gfx.position, .6, {
+					y: 105,
+					ease:Back.easeInOut,
+					onComplete: function(){
+						rw.arena.set_robot_exit(r);
+					}
+				});
+			},
+
 			fall: function(robot){
 
+				var r = robot;
 				var t = TweenMax.to(robot.gfx.position, .6, {
 					y: -100,
-					ease:Back.easeInOut
+					ease:Back.easeInOut,
+					onComplete: function(){
+						r.gfx.visible = false;
+					}
 				});
 			},
 
@@ -317,7 +333,7 @@
         self.scene.add(o);
 
         // Door
-        if(type==DOOR){
+        if(type==EXIT){
         	o.position.y += 25;
 
         	var o2 = new THREE.Mesh(new THREE.BoxGeometry( 40, 90, 40 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading}));
@@ -368,7 +384,10 @@
     	mesh_library[WALL] = new THREE.Mesh(new THREE.BoxGeometry( 50, 50, 50 ), new THREE.MeshPhongMaterial( { color: 0xDEAF47, specular: 0x050505 } ));
     
     	// Door    	
-    	mesh_library[DOOR] = new THREE.Mesh(new THREE.BoxGeometry( 50, 100, 50 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading, opacity: .7, transparent: true}));
+    	mesh_library[DOOR] = new THREE.Mesh(new THREE.BoxGeometry( 50, 50, 50 ), new THREE.MeshPhongMaterial( { color: 0xDEFF47, specular: 0x050505, opacity: .7, transparent: true } ));
+    
+    	// Exit    	
+    	mesh_library[EXIT] = new THREE.Mesh(new THREE.BoxGeometry( 50, 100, 50 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading, opacity: .7, transparent: true}));
     
     	// Energy    	
     	mesh_library[ENERGY] = new THREE.Mesh(new THREE.SphereGeometry( 15, 10, 10 ), new THREE.MeshPhongMaterial({color: 0xffffff}));

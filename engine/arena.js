@@ -5,7 +5,8 @@
 		map: [],
 		map_behaviour: {},
 		width: 0,
-		height: 0
+		height: 0,
+		robot_exited: false
 	};
 
 	var p = {},
@@ -59,6 +60,7 @@
 			data.map[x][y] = type;
 
 			if(type == HOLE && typeof behaviour == 'undefined')	behaviour = behaviour_hole_default;
+			if(type == EXIT && typeof behaviour == 'undefined')	behaviour = behaviour_exit_default;
 
 			if(behaviour)	data.map_behaviour[x+'_'+y] = behaviour;
 		},
@@ -74,6 +76,14 @@
 		get_behaviour: function(x,y){
 			var b = data['map_behaviour'][x+'_'+y];
 			return (typeof b == 'undefined') ? false : b;
+		},
+
+		set_robot_exit: function(r){
+			data['robot_exited'] = r;
+		},
+
+		get_robot_exit: function(){
+			return data['robot_exited'];
 		},
 
 		set_handler: function(m){
@@ -158,6 +168,13 @@
 		rw.arena.graphic.animation.fall(robot);
 		robot.update = function(){}
 		log('[arena] behaviour_hole_default');
+	}
+
+	function behaviour_exit_default(robot){
+
+		rw.arena.graphic.animation.exit(robot);
+		robot.update = function(){}
+		log('[arena] behaviour_exit_default');
 	}
 		
 

@@ -168,10 +168,10 @@
 
 	function game_over(winner){
 
-		var winner_name = rw.robot_manager.get_robot(parseInt(winner)).name;
+		var winner_name = winner.name;
 		log('[robotWalken] GAME OVER. The winner is '+winner_name);
 		cancelAnimationFrame(raf_id);
-		rw.interface.game_over();
+		rw.interface.game_over(winner_name);
 	}
 
 	ctx.log = function(txt, type){
@@ -211,6 +211,7 @@ const EMPTY     = 0;
 const ENERGY    = 50;
 const BUTTON 	= 51;
 const HOLE 		= 52;
+const EXIT 		= 55;
 
 const BOMB 		= 53;
 const LASER 	= 54;
