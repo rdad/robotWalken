@@ -59,8 +59,9 @@
 
 			data.map[x][y] = type;
 
-			if(type == HOLE && typeof behaviour == 'undefined')	behaviour = behaviour_hole_default;
-			if(type == EXIT && typeof behaviour == 'undefined')	behaviour = behaviour_exit_default;
+			if(type == HOLE && typeof behaviour == 'undefined')		behaviour = behaviour_hole_default;
+			if(type == EXIT && typeof behaviour == 'undefined')		behaviour = behaviour_exit_default;
+			if(type == ENERGY && typeof behaviour == 'undefined')	behaviour = behaviour_energy_default;
 
 			if(behaviour)	data.map_behaviour[x+'_'+y] = behaviour;
 		},
@@ -175,6 +176,13 @@
 		rw.arena.graphic.animation.exit(robot);
 		robot.update = function(){}
 		log('[arena] behaviour_exit_default');
+	}
+
+	function behaviour_energy_default(robot){
+
+		robot.energy++;		
+		rw.arena.graphic.animation.energy(robot);
+		log('[arena] behaviour_energy_default');
 	}
 		
 

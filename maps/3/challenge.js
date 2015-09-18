@@ -37,8 +37,10 @@
 	        	x = parseInt(Math.random()*w);
 	        	y = parseInt(Math.random()*h);
 
-        		if((x==0 && y==0) || (x==w && y==0) || (x==w && y==h) || (x==0 && y==h))    continue;           
-	            rw.arena.add(ENERGY,x,y); 
+        		if((x==0 && y==0) || (x==w && y==0) || (x==w && y==h) || (x==0 && y==h))    continue; 
+        		if(rw.arena.get_map(x,y)>0)	continue;
+
+	            rw.arena.add(ENERGY, x, y, self.eat_energy); 
 
 	            nb_spot++;         
 	        }
@@ -57,10 +59,15 @@
 				participant = rw.robot_manager.get('participant');
 
 			for (id in robots) {
+
+				robots[id].energy = 0;
+
 				if(participant.indexOf(parseInt(id))<0 )	continue;
+
 				p = robots[id].position;
 				p.x = start[nb][0];
 				p.y = start[nb][1];
+
 				rw.arena.add(id, p.x, p.y);
   				nb++;
 			}
@@ -73,12 +80,36 @@
 		},
 
 		win: function(){
-			return false;
+
+			if(nb_spot<0){
+
+				var robots = rw.robot_manager.get('list'),
+					winner = {energy: 0};
+
+				for (id in robots) {
+					if(robots[id].energy > winner.energy){
+						winner = robots[id];
+					}
+				}
+				return winner;
+
+			}else{
+				return false;
+			}		
 		},
 
 		set_handler: function(m){
 			rw = m;
 		},
+
+		eat_energy: function(robot){
+
+			nb_spot--;
+			robot.energy++;		
+			rw.arena.graphic.animation.energy(robot);
+
+			log('[challenge] Robot "'+robot.name+'" eat a energy ball !');
+		}
 	};
 
 	var self 			= challenge;

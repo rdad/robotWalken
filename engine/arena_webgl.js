@@ -189,6 +189,35 @@
 
 		animation: {
 
+			energy: function(robot){
+
+				var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 600, 20, 1 ), new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.6})),
+    				selfc = self;
+
+    			o.position.x = robot.position.x*50;
+        		o.position.z = robot.position.y*50;
+        		o.position.y = 275;
+        		self.scene.add(o);
+
+				mesh[robot.position.x][robot.position.y].visible = false;
+
+
+        		var tween = TweenMax.to(o.material, .4, {
+					opacity: 0,
+					ease:Cubic.CubicIn,
+					onComplete: function(){
+						selfc.scene.remove(o);
+					}
+				});
+
+        		robot.gfx.position.y += 10;
+				var scramble = TweenMax.to(robot.gfx.position, .2, {
+					y: 0,
+					ease:Back.easeOut
+				});
+
+			},
+
 			exit: function(robot){
 
 				var r = robot;
