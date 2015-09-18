@@ -4,7 +4,8 @@
 	var mesh = [],
 		camera_position = [],
 		camera_id 		= 0,
-		camera_y  		= 600;
+		camera_y  		= 600,
+		background_color = 0xd4d1be;
 
 	var mesh_library = {};
 	
@@ -24,7 +25,7 @@
 	        document.body.appendChild( this.container );
 
 	        this.renderer = new THREE.WebGLRenderer( {antialias: true} );
-	        this.renderer.setClearColor( 0xd4d1be );
+	        this.renderer.setClearColor( background_color );
 	        this.renderer.setSize( window.innerWidth, window.innerHeight );
 	        this.renderer.shadowMapEnabled = true;
 	        this.renderer.shadowMapType = THREE.PCFSoftShadowMap;
@@ -188,14 +189,29 @@
 
 		animation: {
 
+			fall: function(robot){
+
+				var t = TweenMax.to(robot.gfx.position, .6, {
+					y: -100,
+					ease:Back.easeInOut
+				});
+			},
+
 			move: function(robot, x, y){
 
 				var anim_length = (rw.config.time_step * (1000/60))*0.001;
-				log(anim_length);
+				var rob = robot;
+
 				var tween = TweenMax.to(robot.gfx.position, anim_length, {
 					x: x * 50,
 					z: y * 50,
-					ease:Cubic.easeInOut
+					ease:Cubic.easeInOut,
+					onComplete: function(){
+						var b = rw.arena.get_behaviour(rob.position.x, rob.position.y);
+						if(b !== false){
+							b(rob);
+						}
+					}
 				});
 			},
 
@@ -220,6 +236,7 @@
 
 
 			},
+
 			bump: function(robot, x,y){   	
 
     			var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshBasicMaterial({color: 0xff0000, transparent: true, opacity: 0.6})),

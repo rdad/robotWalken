@@ -32,7 +32,8 @@
 	        rw.arena.add(DOOR, parseInt(Math.random()*w),parseInt(Math.random()*h));
 
 	        rw.arena.add(BUTTON, parseInt(Math.random()*w),parseInt(Math.random()*h));
-	        rw.arena.add(HOLE, parseInt(Math.random()*w),parseInt(Math.random()*h));
+
+	        rw.arena.add(HOLE, w,h-3);
 
 			log('[challenge] init : Map is updated');
 		},

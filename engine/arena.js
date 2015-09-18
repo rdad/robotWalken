@@ -3,6 +3,7 @@
 	var data = {
 		loaded: false,
 		map: [],
+		map_behaviour: {},
 		width: 0,
 		height: 0
 	};
@@ -53,12 +54,26 @@
 			self.graphic.build_map();
 		},
 
-		add: function(type, x, y){
+		add: function(type, x, y, behaviour){
+
 			data.map[x][y] = type;
+
+			if(type == HOLE && typeof behaviour == 'undefined')	behaviour = behaviour_hole_default;
+
+			if(behaviour)	data.map_behaviour[x+'_'+y] = behaviour;
 		},
 
 		get: function(name){
 			return data[name];
+		},
+
+		get_map: function(x, y){
+			return data['map'][x][y];
+		},
+
+		get_behaviour: function(x,y){
+			var b = data['map_behaviour'][x+'_'+y];
+			return (typeof b == 'undefined') ? false : b;
 		},
 
 		set_handler: function(m){
@@ -135,6 +150,15 @@
         }
 	}
 	
+
+	// -- BEHAVIOURS
+	
+	function behaviour_hole_default(robot){
+
+		rw.arena.graphic.animation.fall(robot);
+		robot.update = function(){}
+		log('[arena] behaviour_hole_default');
+	}
 		
 
 })(robotWalken);

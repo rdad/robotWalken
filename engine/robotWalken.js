@@ -205,14 +205,15 @@
 
 
 const EMPTY     = 0;
-const FOOD 		= 50;
-const ENERGY    = 51;
-const BUTTON 	= 52;
-const BOMB 		= 53;
-const HOLE 		= 54;
-const LASER 	= 55;
 
-const ANIM_BUMP = 80;
+// robots : 1 - 49
+
+const ENERGY    = 50;
+const BUTTON 	= 51;
+const HOLE 		= 52;
+
+const BOMB 		= 53;
+const LASER 	= 54;
 
 const WALL      = 100;
 const ROBOT 	= 101;
