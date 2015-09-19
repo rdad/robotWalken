@@ -42,12 +42,12 @@
 			var we_have_button = false;
 			while(!we_have_button){
 
-				x = parseInt(Math.random()*w);
+				x = 0; //parseInt(Math.random()*w);
 	        	y = parseInt(Math.random()*h);
 	        	if(x>=4 && x<=8 && y>=4 && y<=8){
 
 	        	}else{
-	        		rw.arena.add(BUTTON, x,y);
+	        		rw.arena.add(BUTTON, x,y, self.push_button);
 	        		we_have_button = true;
 	        	}   				
 			} 
@@ -105,13 +105,14 @@
 			rw = m;
 		},
 
-		action_button: function(robot){
+		push_button: function(robot){
 		
 			rw.arena.graphic.animation.click_button(robot);
 			var d = rw.arena.graphic.get_mesh(door_pos[0], door_pos[1]);
 
 			if(d){
 				rw.arena.graphic.animation.open_door(d);
+				rw.arena.add(EMPTY, door_pos[0], door_pos[1]);
 			}
 
 			log('[challenge] Robot "'+robot.name+'" action a button !');
