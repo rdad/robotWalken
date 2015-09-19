@@ -68,6 +68,8 @@
 				}
 			}
 
+			document.title = 'RobotWalken Map '+rw.challenge.config.id+' : '+rw.challenge.config.title;
+
 			log('[robotWalken] start : Challenge configuration done');
 
 

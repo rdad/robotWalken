@@ -13,8 +13,6 @@
 
 		width: 0,
 		height: 0,
-		geometry: {robot:null,wall:null,food:null, door: null},
-    	material: {robot:null,wall:null, food:null, door: null},
 
 	    init: function(){
 	       
@@ -433,7 +431,8 @@
 
         // Hole
         if(type==HOLE){
-        	o.position.y -= 25;
+        	o.position.y -= 24;
+        	o.castShadow = false;
         }
 
         return o;
@@ -482,7 +481,7 @@
     	mesh_library[BUTTON]  = new THREE.Mesh(new THREE.CylinderGeometry( 20, 20, 5, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x09509D}));
     
     	// Hole    	
-    	mesh_library[HOLE]   = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x000000}));
+    	mesh_library[HOLE]   = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 20, 1 ), new THREE.MeshBasicMaterial({color: 0x000000}));
     
 	    // SUPER SIMPLE GLOW EFFECT
 		// use sprite because it appears the same from all angles

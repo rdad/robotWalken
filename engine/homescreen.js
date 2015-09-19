@@ -24,7 +24,7 @@
 			if(typeof part != 'undefined'){
 
 				document.getElementById(data.displayed).style.display 	= 'none';
-				document.getElementById(part).style.display 		= 'block';
+				document.getElementById(part).style.display 			= 'block';
 				data.displayed = part;
 				log('[homescreen] '+data.displayed+' displayed ');
 			}else{
@@ -101,7 +101,7 @@
 		// infos
 		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get('version');
 		infos += " by <a href='https://github.com/rdad' target='_blank'>@rdad</a>";
-		infos += "<p><strong>CHALLENGE "+challenge.id+"</strong> : "+challenge.resume+"</p>";
+		infos += "<p><strong>CHALLENGE "+challenge.id+"</strong><br>"+challenge.resume+"</p>";
 
 		var i = get_element( 'p',null, {innerHTML: infos} );
 		home.appendChild(i);
