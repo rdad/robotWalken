@@ -187,8 +187,20 @@
 			rw = m;
 		},
 
+		get_mesh: function(x, y){
+			return mesh[x][y];
+		},
+
 		animation: {
 
+			click_button: function(robot){
+
+			},
+
+			open_door: function(door){
+
+			},
+			
 			energy: function(robot){
 
 				var o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 600, 20, 1 ), new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0.6})),
@@ -429,6 +441,19 @@
     
     	// Hole    	
     	mesh_library[HOLE]   = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 1, 15, 1 ), new THREE.MeshPhongMaterial({color: 0x000000}));
+    
+	    // SUPER SIMPLE GLOW EFFECT
+		// use sprite because it appears the same from all angles
+		/*var spriteMaterial = new THREE.SpriteMaterial( 
+		{ 
+			map: new THREE.ImageUtils.loadTexture( 'images/glow.png' ), 
+			useScreenCoordinates: false, alignment: THREE.SpriteAlignment.center,
+			color: 0x0000ff, transparent: false, blending: THREE.AdditiveBlending
+		});
+		var sprite = new THREE.Sprite( spriteMaterial );
+		sprite.scale.set(200, 200, 1.0);
+		mesh.add(sprite); // this centers the glow at the mesh*/
+
     }
 
 })(robotWalken);
