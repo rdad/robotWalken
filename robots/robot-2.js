@@ -1,6 +1,6 @@
 (function(){
 
-    var boulon = new Robot('boulon',2);
+    var boulon = new Robot('boulon',2, '@rdad');
 
     boulon.init = function(){
     	this.dir = [BAS,DROITE,HAUT,GAUCHE];

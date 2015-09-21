@@ -30,9 +30,11 @@
 	<body>
             <script>
 
-               robotWalken.init({
-               		robot_folder: '../../robots/'
+            domReady(function(){
+                robotWalken.init({
+                    robot_folder: '../../robots/'
                }).start();
+            });
 
             </script>
                 

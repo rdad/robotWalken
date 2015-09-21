@@ -1,6 +1,6 @@
 (function(){
 
-    var boulon = new Robot('Z6PO',3);
+    var boulon = new Robot('Z6PO',3, '@rdad');
 
     boulon.init = function(){
 
