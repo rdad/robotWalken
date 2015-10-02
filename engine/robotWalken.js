@@ -3,7 +3,7 @@
 	"use strict";
 
 	var data = {
-		version : 0.1,
+		version : 0.12,
 		debug: true,
 		display_driver: 'webgl',
 		timer: 0,

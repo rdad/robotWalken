@@ -10,6 +10,7 @@
 			id: 1,
 			title: 'The Maze',
 			resume: 'Your robot must found the output door',
+			max_participant: 4,
 			map: {
 				width: 10,
 				height: 10

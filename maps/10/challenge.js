@@ -8,6 +8,7 @@
 			id: 2,
 			title: 'Escape! II',
 			resume: 'Your robot must found the output door',
+			max_participant: 1,
 			map: {
 				width: 20,
 				height: 20

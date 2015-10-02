@@ -10,6 +10,7 @@
 			id: 8,
 			title: 'The forest',
 			resume: 'Your robot is lost in the forest.<br>He must found the output door',
+			max_participant: 1,
 			map: {
 				width: 8,
 				height: 8

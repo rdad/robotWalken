@@ -10,6 +10,7 @@
 			id: 7,
 			title: 'The Big X',
 			resume: 'Your robot must found the output door',
+			max_participant: 1,
 			map: {
 				width: 5,
 				height: 5

@@ -10,6 +10,7 @@
 			id: 4,
 			title: 'The Tower',
 			resume: 'You must enter the tower.<br>The door is locked.<br>Action the button to open the door<br>Beware the dead holes',
+			max_participant: 4,
 			map: {
 				width: 13,
 				height: 13

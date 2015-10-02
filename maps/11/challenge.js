@@ -10,6 +10,7 @@
 			id: 3,
 			title: 'Energy field',
 			resume: 'In a field full of stones, your robot must collecte Energy spots (ENERGY).<br>The winner will be the one who has collected the most energy spots',
+			max_participant: 4,
 			map: {
 				width: 19,
 				height: 19
