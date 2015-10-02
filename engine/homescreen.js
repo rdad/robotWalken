@@ -138,7 +138,7 @@
 
 		// infos
 		var r = challenge.max_participant;
-		r += (r>1) ? 'robots' : 'robot';
+		r += (r>1) ? ' robots' : ' robot';
 		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get('version');
 		infos += " by <a href='https://github.com/rdad' target='_blank'>@rdad</a>";
 		infos += "<p><strong>CHALLENGE "+challenge.id+" ("+r+")</strong><br>"+challenge.resume+"</p>";

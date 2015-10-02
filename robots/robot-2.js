@@ -3,7 +3,7 @@
     var boulon = new Robot('boulon',2, '@rdad');
 
     boulon.init = function(){
-    	this.dir = [BAS,DROITE,HAUT,GAUCHE];
+    	this.dir = [DOWN,RIGHT,UP,LEFT];
 	    this.v = 0;
 	    this.pas = [];
     }
@@ -14,21 +14,21 @@
         
         var exit;
 
-        if(this.look(BAS) == EXIT){
-            exit = BAS;
-        }else if(this.look(HAUT) == EXIT){
-            exit = HAUT;
-        }else if(this.look(DROITE) == EXIT){
-            exit = DROITE;
-        }else if(this.look(GAUCHE) == EXIT){
-            exit = GAUCHE;
+        if(this.look(DOWN) == EXIT){
+            exit = DOWN;
+        }else if(this.look(UP) == EXIT){
+            exit = UP;
+        }else if(this.look(RIGHT) == EXIT){
+            exit = RIGHT;
+        }else if(this.look(LEFT) == EXIT){
+            exit = LEFT;
         }else{
             var found = [];
 
-            if(this.look(BAS) == EMPTY)     found.push(BAS);
-            if(this.look(HAUT) == EMPTY)    found.push(HAUT);
-            if(this.look(DROITE) == EMPTY)  found.push(DROITE);
-            if(this.look(GAUCHE) == EMPTY)  found.push(GAUCHE);
+            if(this.look(DOWN) == EMPTY)    found.push(DOWN);
+            if(this.look(UP) == EMPTY)      found.push(UP);
+            if(this.look(RIGHT) == EMPTY)   found.push(RIGHT);
+            if(this.look(LEFT) == EMPTY)    found.push(LEFT);
 
             var r = Math.round(Math.random() * (found.length - 1));
             exit = found[r];

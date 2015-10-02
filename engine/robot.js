@@ -1,8 +1,8 @@
 
-const HAUT      = 0;
-const BAS       = 2;
-const GAUCHE    = 10;
-const DROITE    = 12;
+const UP      = 0;
+const DOWN    = 2;
+const LEFT    = 10;
+const RIGHT   = 12;
 
 var Robot = function (name, id, author)
 {

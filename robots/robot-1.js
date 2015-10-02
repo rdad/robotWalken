@@ -1,10 +1,9 @@
 (function(){
 
-
 	var robby = new Robot('robby', 1, '@rdad');
 
 	robby.init = function(){
-	    this.dir = [BAS,DROITE,HAUT,GAUCHE];
+	    this.dir = [DOWN,RIGHT,UP,LEFT];
 	    this.v = 0;
 	    this.pas = [];
 	}

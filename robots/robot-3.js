@@ -7,12 +7,7 @@
     }
 
     boulon.update = function(){
-    	this.move(BAS);
-    	this.move(BAS);
-    	this.move(BAS);
-    	this.move(BAS);
-    	this.move(BAS);
-    	this.move(BAS);
+    	this.move(DOWN);
     }
 
     robotWalken.add_participation(boulon);
