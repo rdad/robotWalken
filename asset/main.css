@@ -61,14 +61,6 @@ body {
 	color:white;
 }
 
-#interface{
-	width:20%;
-	position: absolute;
-	left: 0;
-	top:50px;
-	font-size: 400%;
-}
-
 h2, h3, h4 {
 	margin: 0;
 	color: #333;
@@ -111,4 +103,32 @@ button{
 	text-align: center;
 	line-height: 300px;
 	display: none;
+}
+
+#interface{
+	display: block;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+	width: 150px;
+	list-style: none;
+	color: #999;
+	padding: 0;
+}
+
+#interface li{
+	text-align: center;
+	padding: 10px 0;
+	background-color: rgba(255,255,255,.7);
+}
+
+#turns{
+	margin-bottom: 5px;
+	font-size: 3em;
+	color: #0074D9;
+	padding-top: 0 !important;
+} 
+
+#speed{
+	color: #0074D9;
 }

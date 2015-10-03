@@ -45,7 +45,7 @@ Robot.prototype = {
         return robotWalken.action.robot.eat(this, pos.x, pos.y);
     },
     
-    getMyPosition: function(){
+    getPosition: function(){
         return this.position;
     },
 

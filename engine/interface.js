@@ -99,8 +99,9 @@
 
 		// infos
 		
-		infos = "<h3><span  id='timer'>"+timer+"</span></h3><h3 class='speed'><span id='speed'></span>/5</h4>";
-		el = get_element('div', 'interface', {
+		var infos = "<li>TURNS</li><li id='turns'>"+timer+"</li><li>SPEED: <span id='speed'>-</span>/5</li>";
+
+		el = get_element('ul', 'interface', {
 			innerHTML: infos
 		});
 		rw.arena.graphic.container.appendChild( el );
@@ -110,7 +111,7 @@
 		rw.arena.graphic.container.appendChild( get_element('div', 'game_over') );
 
 
-		el_timer 	= document.getElementById('timer');
+		el_timer 	= document.getElementById('turns');
 		el_speed 	= document.getElementById('speed');
 		el_gameover = document.getElementById('game_over');
 	}

@@ -16,7 +16,8 @@
 
 		graphic: null,
 
-		color: ['','A50A02','43A2A6','FA4E2C','2E2525'],
+		//color: ['','A50A02','43A2A6','FA4E2C','2E2525'],
+		color: ['','FF4136','0074D9','39CCCC','FFDC00'],
 
 		init: function(driver_name){
 

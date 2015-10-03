@@ -77,7 +77,11 @@
 
 		document.getElementById('bt_config_save').addEventListener("click", function(){
 
-			rw.robot_manager.set_participant_list(robot_selection);
+			var list = [];
+			for(var p in robot_selection){
+				if(robot_selection[p])	list.push(parseInt(robot_selection[p]));
+			}
+			rw.robot_manager.set_participant_list(list);
 		    self.display('home');
 		});
 
@@ -141,7 +145,7 @@
 		r += (r>1) ? ' robots' : ' robot';
 		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get('version');
 		infos += " by <a href='https://github.com/rdad' target='_blank'>@rdad</a>";
-		infos += "<p><strong>CHALLENGE "+challenge.id+" ("+r+")</strong><br>"+challenge.resume+"</p>";
+		infos += "<p><strong>CHALLENGE "+challenge.id+" ("+r+" max)</strong><br>"+challenge.resume+"</p>";
 
 		var i = get_element( 'p',null, {innerHTML: infos} );
 		home.appendChild(i);
