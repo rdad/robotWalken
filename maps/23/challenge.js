@@ -7,7 +7,7 @@
 	var challenge = {
 
 		config: {
-			id: 11,
+			id: 1,
 			title: 'The Maze',
 			resume: 'Your robot must found the output door',
 			map: {
@@ -27,20 +27,28 @@
 			
 			generate_maze(maze);
 
-			// exit
-			var e = [{x:0, y:9},{x:9, y:9},{x:9, y:0}];
-			var id = parseInt(Math.random()*3);
-			rw.arena.add(EXIT, e[id].x, e[id].y);
-
 			log('[challenge] init : Map is updated');
 		},
 
 		init_robot: function(){
 
-			var robot = rw.robot_manager.get_robot(rw.robot_manager.get('participant')[0]);
-			rw.arena.add(robot.id, 0,0);
+			var id, p, nb=0,
+				w = self.config.map.width-1,
+				h = self.config.map.height-1,
+				start = [[0,0],[w,h],[w,0],[0,h]],
+				robots = rw.robot_manager.get('list'),
+				participant = rw.robot_manager.get('participant');
 
-			log('[challenge] init : The robot is on the map');
+			for (id in robots) {
+				if(participant.indexOf(parseInt(id))<0 )	continue;
+				p = robots[id].position;
+				p.x = start[nb][0];
+				p.y = start[nb][1];
+				rw.arena.add(id, p.x, p.y);
+  				nb++;
+			}
+
+			log('[challenge] init : '+nb+' robot(s) are on the map');
 		},
 
 		update: function(){
@@ -75,8 +83,7 @@
 	}
 
 
-	/*Maz générator e*/
-
+	/*Maze*/
 	var Maze = (function(){
 	  var get = function(h, w){
 

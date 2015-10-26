@@ -1,16 +1,18 @@
 (function(ctx){
 
 	var rw;
+
+	var exit_door;
 	
 	var challenge = {
 
 		config: {
-			id: 2,
-			title: 'Escape! II',
-			resume: 'Your robot must found the output door',
+			id: 10,
+			title: 'The forest',
+			resume: 'Your robot is lost in the forest.<br>He must found the output door',
 			map: {
-				width: 20,
-				height: 20
+				width: 8,
+				height: 8
 			}
 		},
 
@@ -18,41 +20,32 @@
 
 			var w = self.config.map.width-1,
 				h = self.config.map.height-1,
-				nb = 4, j,x = 4,y;
+				j,p;
 
-			for(j=0; j<nb; j++)
-	        {
-	        	y = parseInt(Math.random()*h); 
-	        	build_wall(x,y); 
-	        	x = x+parseInt(Math.random()*3)+2;
-	        		       
+			for(j=0; j<6; j++)
+	        { 
+	        	p = get_new_pos(w,h);
+	            rw.arena.add(WALL,p.x,p.y);          
 	        }
 
-	        rw.arena.add(DOOR,w,parseInt(Math.random()*h));
+	        for(j=0; j<3; j++)
+	        { 
+	        	p = get_new_pos(w,h);
+	            rw.arena.add(HOLE,p.x,p.y);          
+	        }
 
+	        p = get_new_pos(w,h);
+	        rw.arena.add(EXIT, p.x,p.y);
 
 			log('[challenge] init : Map is updated');
 		},
 
 		init_robot: function(){
 
-			var id, p, nb=0,
-				w = self.config.map.width-1,
-				h = self.config.map.height-1,
-				start = [[0,0],[w,h],[w,0],[0,h]],
-				robots = rw.robot_manager.get('list'),
-				participant = rw.robot_manager.get('participant');
+			var robot = rw.robot_manager.get_robot(rw.robot_manager.get('participant')[0]);
+			rw.arena.add(robot.id, 0,0);
 
-			for (id in robots) {
-				if(participant.indexOf(parseInt(id))<0 )	continue;
-				p = robots[id].position;
-				p.x = start[nb][0];
-				p.y = start[nb][1];
-				rw.arena.add(id, p.x, p.y);
-  				nb++;
-			}
-
-			log('[challenge] init : '+nb+' robot(s) are on the map');
+			log('[challenge] init : The robot is on the map');
 		},
 
 		update: function(){
@@ -60,7 +53,8 @@
 		},
 
 		win: function(){
-			return false;
+			
+			return rw.arena.get_robot_exit();
 		},
 
 		set_handler: function(m){
@@ -71,15 +65,23 @@
 	var self 			= challenge;
 	ctx.add_module('challenge', challenge);
 
-	function build_wall(x, y){
+	function get_new_pos(w,h){
 
-		var h = self.config.map.height,
-			c;
+		var found = false,
+			px, py;
 
-			for(j=0; j<h; j++){
-        		c = (j == y) ? EMPTY : WALL;           
-	            rw.arena.add(c,x,j);          
-	        }
+		while(found === false){
+
+			px = parseInt(Math.random()*w);
+	        py = parseInt(Math.random()*h);
+
+        	if(px==0 && py==0)	continue; 
+        	if(rw.arena.get_map(px,py) == EMPTY){
+        		found  = {x:px, y:py};
+        	}
+		}
+
+		return found;
 	}
 
 })(robotWalken);

@@ -8,11 +8,12 @@
 
 		config: {
 			id: 8,
-			title: 'The forest',
-			resume: 'Your robot is lost in the forest.<br>He must found the output door',
+			title: 'The drawbridge',
+			resume: 'Your robot must open the drawbridge before access the exit',
+			max_participant: 1,
 			map: {
-				width: 8,
-				height: 8
+				width: 5,
+				height: 5
 			}
 		},
 
@@ -20,22 +21,18 @@
 
 			var w = self.config.map.width-1,
 				h = self.config.map.height-1,
-				j,p;
+				map = [
+				[0,0,0,0,0],
+				[0,WALL,WALL,WALL,WALL],
+				[0,WALL,0,0,0],
+				[0,WALL,0,WALL,0],
+				[0,0,0,WALL,EXIT]
+			];
 
-			for(j=0; j<6; j++)
-	        { 
-	        	p = get_new_pos(w,h);
-	            rw.arena.add(WALL,p.x,p.y);          
-	        }
+			build_map(map);
 
-	        for(j=0; j<3; j++)
-	        { 
-	        	p = get_new_pos(w,h);
-	            rw.arena.add(HOLE,p.x,p.y);          
-	        }
-
-	        p = get_new_pos(w,h);
-	        rw.arena.add(EXIT, p.x,p.y);
+	        rw.arena.add(BUTTON, 0,4, self.push_button);
+	        rw.arena.add(DOOR, 3, 4, self.action_button);
 
 			log('[challenge] init : Map is updated');
 		},
@@ -43,7 +40,7 @@
 		init_robot: function(){
 
 			var robot = rw.robot_manager.get_robot(rw.robot_manager.get('participant')[0]);
-			rw.arena.add(robot.id, 0,0);
+			rw.arena.add(robot.id, 0, 0);
 
 			log('[challenge] init : The robot is on the map');
 		},
@@ -60,28 +57,34 @@
 		set_handler: function(m){
 			rw = m;
 		},
+
+		push_button: function(robot){
+		
+			rw.arena.graphic.animation.click_button(robot);
+			var d = rw.arena.graphic.get_mesh(3,4);
+
+			if(d){
+				rw.arena.graphic.animation.open_door(d);
+				rw.arena.add(EMPTY, 3,4);
+			}
+
+			log('[challenge] Robot "'+robot.name+'" action a button !');
+		}
 	};
 
 	var self 			= challenge;
 	ctx.add_module('challenge', challenge);
 
-	function get_new_pos(w,h){
+	function build_map(map){
 
-		var found = false,
-			px, py;
+		for(var x = 0; x<map.length; x++){
 
-		while(found === false){
+			var l  = map[x];
 
-			px = parseInt(Math.random()*w);
-	        py = parseInt(Math.random()*h);
-
-        	if(px==0 && py==0)	continue; 
-        	if(rw.arena.get_map(px,py) == EMPTY){
-        		found  = {x:px, y:py};
-        	}
+			for(var y = 0; y<l.length; y++){
+				rw.arena.add(l[y], x,y);
+			}
 		}
-
-		return found;
 	}
 
 })(robotWalken);
