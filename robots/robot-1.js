@@ -11,19 +11,7 @@
 
 	robby.update = function(){
 	    
-	    var found = false;
-	    
-	    while(found==false){
-	        var p = this.dir[this.v];
-	        var l = this.look(p);
-	        if(l==EMPTY){
-	            this.move(p);
-	            found = true;
-	        }else{
-	            this.v++;
-	            if(this.v>3) this.v=0;
-	        }
-	    }
+	   
 	}
 
 	robotWalken.add_participation(robby);

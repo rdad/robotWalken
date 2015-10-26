@@ -43,6 +43,16 @@
 			}
 		},
 
+		put_min_participant_robby : function(){
+
+			console.log(data);
+			// Si aucun participant, Robby s'en charge
+			
+			if(data.participant.length <1){
+				data.participant.push(1);
+			}
+		},
+
 		init_robots: function(){
 
 			// init robots

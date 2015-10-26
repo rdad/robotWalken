@@ -52,6 +52,7 @@
 
 		document.getElementById('bt_run').addEventListener("click", function(){
 
+			rw.robot_manager.put_min_participant_robby();
 			rw.challenge.init_robot();
 			rw.arena.build();
 		    robotWalken.run();
