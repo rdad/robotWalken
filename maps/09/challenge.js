@@ -2,7 +2,7 @@
 
 	var rw;
 
-	var exit_door;
+	var exit_door = false;
 	
 	var challenge = {
 
@@ -31,7 +31,8 @@
 
 			build_map(map);
 
-			rw.arena.add(BUTTON, 0,1, self.push_button);
+			rw.arena.add(BUTTON, 4,1, self.push_button);
+			rw.arena.add(EXIT, 4,4);
 
 			log('[challenge] init : Map is updated');
 		},
@@ -56,6 +57,19 @@
 		set_handler: function(m){
 			rw = m;
 		},
+
+		push_button: function(robot){
+		
+			rw.arena.graphic.animation.click_button(robot);
+			var d = rw.arena.graphic.get_mesh(0,2);
+
+			if(d){
+				rw.arena.graphic.animation.open_door(d);				
+				rw.arena.add(EMPTY, 0,2);				
+			}
+
+			log('[challenge] Robot "'+robot.name+'" action a button !');
+		}
 	};
 
 	var self 			= challenge;

@@ -86,7 +86,6 @@
 			localStorage.setItem('rw_participants', JSON.stringify(list));
 
 			log('[robot_manager] set_participant_list : New list is saved localy');
-			log(list);
 		},
 
 		set_handler: function(m){

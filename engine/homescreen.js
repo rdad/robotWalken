@@ -7,6 +7,8 @@
 
 	var rw;
 
+	var robot_selection = [];
+
 	var homescreen = {
 
 		init: function(){
@@ -74,13 +76,53 @@
 		    self.display('home');
 		});
 
+		document.getElementById('bt_config_save').addEventListener("click", function(){
+
+			var list = [];
+			for(var p in robot_selection){
+				if(robot_selection[p])	list.push(parseInt(robot_selection[p]));
+			}
+			rw.robot_manager.set_participant_list(list);
+		    self.display('home');
+		});
+
 		
 
-		var i;
-		
-		
+		var li = document.querySelectorAll("#config li");
+		for(var i=0; i<li.length; i++) {
+        	li[i].addEventListener('click', select_robot, true);
+    	}
 	}
 
+	function select_robot(e){
+
+		var target 	= e.target;
+		var color 	= target.style.backgroundColor;
+		var id 		= parseInt(target.dataset.id);
+
+		if(color == 'rgb(255, 255, 255)'){
+
+			// retirer
+			target.style.backgroundColor = 'rgba(255,255,255,.2)';
+
+			robot_selection.forEach(function(el, index){
+				if(el == id)	delete robot_selection[index];
+			});
+
+		}else{
+
+			// ajouter
+			target.style.backgroundColor = 'rgb(255, 255, 255)';
+			robot_selection.unshift(id);
+		}
+
+		// limit ?
+		
+		while(robot_selection.length > rw.challenge.config.max_participant){
+			var r = parseInt(robot_selection.pop())-1;
+			document.querySelectorAll("#config li")[r].style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+		}	
+	}
 
 	function build_dom(){
 
@@ -100,9 +142,11 @@
 		el.appendChild(home);
 
 		// infos
+		var r = challenge.max_participant;
+		r += (r>1) ? ' robots' : ' robot';
 		var infos = "<h2>"+challenge.title+"</h2>RobotWalken version "+robotWalken.get('version');
 		infos += " by <a href='https://github.com/rdad' target='_blank'>@rdad</a>";
-		infos += "<p><strong>CHALLENGE "+challenge.id+"</strong><br>"+challenge.resume+"</p>";
+		infos += "<p><strong>CHALLENGE "+challenge.id+" ("+r+" max)</strong><br>"+challenge.resume+"</p>";
 
 		var i = get_element( 'p',null, {innerHTML: infos} );
 		home.appendChild(i);
@@ -121,8 +165,6 @@
 		home.appendChild(bt2);
 
 
-
-
 		// ---- div config ----
 		
 		config = get_element( 'div', 'config' );
@@ -136,13 +178,14 @@
 
 		if(list){
 			for(i in list){
-				c 		 = (participants.indexOf(parseInt(i)) >= 0) ? ' checked' : '';
+				c 		 = (participants.indexOf(parseInt(i)) >= 0) ? '#fff' : 'rgba(255,255,255,.2)';
 				color 	 = rw.arena.color[parseInt(i)];
-				rob 	+= "<input type='checkbox'"+c+" value='"+i+"'><span style='color:#"+color+"'> "+list[i].name+"</span><br>";
+				rob 	+= "<li style='background-color: "+c+"; color:#"+color+"' data-id='"+i+"'>"+list[i].name+"</li>";
+				if(c == '#fff')	robot_selection.push(i);
 			}			
 		}
 
-		var r = get_element( 'p',null, {innerHTML: rob} );
+		var r = get_element( 'ul',null, {innerHTML: rob} );
 		config.appendChild(r);
 
 		// bt back

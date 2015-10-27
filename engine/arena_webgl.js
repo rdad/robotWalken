@@ -212,11 +212,13 @@
 				});
 			},
 
-			open_door: function(door){
+			open_door: function(door, remove_at_end){
 
 				var d = door,
 					o = new THREE.Mesh(new THREE.CylinderGeometry( 25, 25, 600, 20, 1 ), new THREE.MeshBasicMaterial({color: 0x09509D, transparent: true, opacity: 0.6})),
     				selfc = self;
+
+    			remove_at_end = (typeof remove_at_end === 'undefined') ? true : false;
 
     			o.position.x = door.position.x;
         		o.position.z = door.position.z;
@@ -235,7 +237,7 @@
 					opacity: 0,
 					ease:Cubic.CubicIn,
 					onComplete: function(){
-						selfc.scene.remove(d);
+						if(remove_at_end === true)	selfc.scene.remove(d);
 					}
 				});
 
@@ -413,15 +415,11 @@
         mesh[x][y] = o;
         self.scene.add(o);
 
-        // Door
+        // Exit Door
         if(type==EXIT){
-        	o.position.y += 25;
-
         	var o2 = new THREE.Mesh(new THREE.BoxGeometry( 40, 90, 40 ), new THREE.MeshLambertMaterial({color: 0x67DD2C, shading: THREE.SmoothShading}));
-        	o2.position.x = x*50;
-        	o2.position.z = y*50;
-        	o2.position.y += 20;
-        	self.scene.add(o2);
+        	o.add(o2);
+        	o.position.y += 25;
         }
 
         // Button

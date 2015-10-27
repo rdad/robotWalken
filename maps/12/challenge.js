@@ -10,6 +10,7 @@
 			id: 4,
 			title: 'The Tower',
 			resume: 'You must enter the tower.<br>The door is locked.<br>Action the button to open the door<br>Beware the dead holes',
+			max_participant: 4,
 			map: {
 				width: 13,
 				height: 13
@@ -42,7 +43,7 @@
 			var we_have_button = false;
 			while(!we_have_button){
 
-				x = 0; //parseInt(Math.random()*w);
+				x = parseInt(Math.random()*w);
 	        	y = parseInt(Math.random()*h);
 	        	if(x>=4 && x<=8 && y>=4 && y<=8){
 

@@ -7,9 +7,12 @@
 	var challenge = {
 
 		config: {
+
 			id: 11,
 			title: 'The Maze',
 			resume: 'Your robot must found the output door',
+			max_participant: 1,
+
 			map: {
 				width: 10,
 				height: 10

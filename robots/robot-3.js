@@ -3,12 +3,13 @@
     var boulon = new Robot('Z6PO',3, '@rdad');
 
     boulon.init = function(){
-        this.dir = [BAS,DROITE,HAUT,GAUCHE];
+        this.dir = [DOWN,RIGHT,UP,LEFT];
         this.v = 0;
         this.pas = [];
     }
 
     boulon.update = function(){
+
     	 var found = false;
         
         while(found==false){
@@ -23,6 +24,7 @@
                 if(this.v>3) this.v=0;
             }
         }
+
     }
 
     robotWalken.add_participation(boulon);
