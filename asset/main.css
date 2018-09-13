@@ -132,3 +132,7 @@ button{
 #speed{
 	color: #0074D9;
 }
+
+.text_info{
+	font-size: 20px !important;
+}

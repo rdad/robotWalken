@@ -114,7 +114,7 @@
 			}
 
 			rw.arena.graphic.render();
-			rw.arena.graphic.stats.update();
+			if (rw.config.debug) rw.arena.graphic.stats.update();
 		},
 
 		pause: function() {
